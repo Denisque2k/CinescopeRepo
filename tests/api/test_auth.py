@@ -171,7 +171,7 @@ class TestAuthAPI:
         """
         params = {"roles": "SUPER_ADMIN",
                   "pageSize": 4,
-                  "page": 1.5,
+                  "page": 1,
                   "createAt": "asc"}
         api_manager.auth_api.authenticate_admin(admin_creds)
         response = api_manager.user_api.get_list_users(params=params)

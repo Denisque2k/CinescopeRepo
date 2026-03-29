@@ -5,7 +5,9 @@ HEADERS = {
     "Content-Type": "application/json",
     "Accept": "application/json"
 }
-
+"""
+Здесь эндпоинты к AuthAPI
+"""
 LOGIN_ENDPOINT = "login"
 REGISTER_ENDPOINT = "register"
 GET_LOGOUT_ENDPOINT = "logout"
@@ -16,3 +18,12 @@ DELETE_USER = "user/"
 PATCH_USER = "user/"
 CREATE_USER = "user"
 GET_USER_LIST = "user"
+
+"""
+Здесь эндпоинты к MoviesAPI
+"""
+BASE_URL_MOVIES = "https://api.dev-cinescope.coconutqa.ru/"
+GET_MOVIES = "movies"
+POST_MOVIE = "movies"
+GET_MOVIE = "movies/"
+DELETE_MOVIE = "movies/"

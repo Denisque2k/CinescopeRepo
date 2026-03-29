@@ -38,3 +38,4 @@ class DataGenerator:
         random.shuffle(password)
 
         return ''.join(password)
+

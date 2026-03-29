@@ -1,6 +1,5 @@
-
 import requests
-
+from api.api_manager_movies import ApiManagerMovies
 from api.api_manager import ApiManager
 from constants import BASE_URL
 import pytest
@@ -64,9 +63,27 @@ def api_manager(session):
     return ApiManager(session)
 
 @pytest.fixture(scope="session")
+def api_manager_movies(session):
+    return ApiManagerMovies(session)
+
+@pytest.fixture(scope="session")
 def requester():
     """
     Фикстура для создания экземпляра CustomRequester.
     """
     session = requests.Session()
     return CustomRequester(session=session, base_url=BASE_URL)
+
+@pytest.fixture(scope="session")
+def data_get_movies(session):
+
+    return {
+        "pageSize": 10,
+        "page": 1,
+        "minPrice": 1,
+        "maxPrice": 1000,
+        "locations": "SPB",
+        "published": True,
+        "genreId": 1,
+        "createdAt": "asc"
+    }
