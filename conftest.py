@@ -1,3 +1,5 @@
+import random
+
 import requests
 from api.api_manager_movies import ApiManagerMovies
 from api.api_manager import ApiManager
@@ -76,7 +78,6 @@ def requester():
 
 @pytest.fixture(scope="session")
 def data_get_movies(session):
-
     return {
         "pageSize": 10,
         "page": 1,
@@ -86,4 +87,21 @@ def data_get_movies(session):
         "published": True,
         "genreId": 1,
         "createdAt": "asc"
+    }
+
+@pytest.fixture(scope="session")
+def create_movie_data(session, api_manager_movies):
+    response = api_manager_movies.movie_api.get_genres_list()
+    response_data = response.json()
+    random_item = random.choice(response_data)
+    location_list = ("MSK", "SPB")
+    random_location = random_item(location_list)
+    return {
+        "name": DataGenerator.generate_random_password(),
+        "imageUrl": f"https://{DataGenerator.generate_random_password()}.url",
+        "price": random.randint(1,10000),
+        "description": DataGenerator.generate_random_password(),
+        "location": random_location,
+        "published": True,
+        "genreId": random_item["name"]
     }

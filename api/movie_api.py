@@ -1,5 +1,5 @@
 from custom_requester.custom_requester import CustomRequester
-from constants import BASE_URL_MOVIES, GET_MOVIES, POST_MOVIE, GET_MOVIE, DELETE_MOVIE
+from constants import BASE_URL_MOVIES, GET_MOVIES, POST_MOVIE, GET_MOVIE, DELETE_MOVIE, PATCH_MOVIE, GENRES_URL
 
 class MovieAPI(CustomRequester):
     def __init__(self, session):
@@ -14,11 +14,11 @@ class MovieAPI(CustomRequester):
             expected_status=excepted_status
         )
 
-    def create_movie(self, create_data, expected_status=201):
+    def create_movie(self, data, expected_status=201):
         return self.send_request(
             method="POST",
             endpoint=POST_MOVIE,
-            data=create_data,
+            data=data,
             expected_status=expected_status
         )
 
@@ -33,5 +33,20 @@ class MovieAPI(CustomRequester):
         return self.send_request(
             method="DELETE",
             endpoint=f"{DELETE_MOVIE}{movie_id}",
+            expected_status=expected_status
+        )
+
+    def patch_movie(self, movie_id, data, expected_status=200):
+        return self.send_request(
+            method="PATCH",
+            endpoint=f"{PATCH_MOVIE}{movie_id}",
+            data=data,
+            expected_status=expected_status
+        )
+
+    def get_genres_list(self, expected_status=200):
+        return self.send_request(
+            method="GET",
+            endpoint=GENRES_URL,
             expected_status=expected_status
         )

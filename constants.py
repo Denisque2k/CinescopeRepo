@@ -1,5 +1,3 @@
-
-
 BASE_URL = "https://auth.dev-cinescope.coconutqa.ru/"
 HEADERS = {
     "Content-Type": "application/json",
@@ -18,7 +16,6 @@ DELETE_USER = "user/"
 PATCH_USER = "user/"
 CREATE_USER = "user"
 GET_USER_LIST = "user"
-
 """
 Здесь эндпоинты к MoviesAPI
 """
@@ -27,3 +24,6 @@ GET_MOVIES = "movies"
 POST_MOVIE = "movies"
 GET_MOVIE = "movies/"
 DELETE_MOVIE = "movies/"
+PATCH_MOVIE = "movies/"
+
+GENRES_URL = "genres"
