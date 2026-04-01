@@ -1,6 +1,8 @@
 import constants
 from api.api_manager import ApiManager
 from api.api_manager_movies import ApiManagerMovies
+from utils.data_generator import DataGenerator
+
 
 class TestMovieAPI:
     def test_get_movies(self, api_manager_movies):
@@ -88,6 +90,12 @@ class TestMovieAPI:
 
     def test_get_genres(self, api_manager_movies):
         response = api_manager_movies.movie_api.get_genres_list()
+        response_data = response.json()
+
+    def test_create_genre(self, api_manager_movies, admin_creds):
+        api_manager_movies.auth_api.authenticate_admin(admin_creds)
+        name = DataGenerator.generate_random_genre()
+        response = api_manager_movies.movie_api.create_genre(name)
         response_data = response.json()
 
 

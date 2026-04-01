@@ -1,5 +1,5 @@
 import random
-
+from entities.user import User
 import requests
 from api.api_manager_movies import ApiManagerMovies
 from api.api_manager import ApiManager
@@ -8,6 +8,7 @@ import pytest
 from utils.data_generator import DataGenerator
 from faker import Faker
 from custom_requester.custom_requester import CustomRequester
+from resources.user_creds import SuperAdminCreds
 
 faker = Faker()
 
@@ -90,18 +91,62 @@ def data_get_movies(session):
     }
 
 @pytest.fixture(scope="session")
-def create_movie_data(session, api_manager_movies):
-    response = api_manager_movies.movie_api.get_genres_list()
+def create_genre(api_manager_movies, admin_creds):
+    api_manager_movies.auth_api.authenticate_admin(admin_creds)
+    name = DataGenerator.generate_random_genre()
+    response = api_manager_movies.movie_api.create_genre(name)
     response_data = response.json()
-    random_item = random.choice(response_data)
-    location_list = ("MSK", "SPB")
-    random_location = random_item(location_list)
+    return response_data["id"]
+
+
+
+@pytest.fixture(scope="session")
+def create_movie_data(session, api_manager_movies, create_genre):
+    location_list = ["MSK", "SPB"]
+    random_location = random.choice(location_list)
     return {
         "name": DataGenerator.generate_random_password(),
-        "imageUrl": f"https://{DataGenerator.generate_random_password()}.url",
+        "imageUrl": "https://randomurl.url",
         "price": random.randint(1,10000),
         "description": DataGenerator.generate_random_password(),
         "location": random_location,
         "published": True,
-        "genreId": random_item["name"]
+        "genreId": create_genre
     }
+
+@pytest.fixture
+def user_session():
+    user_pool = []
+
+    def _create_user_session():
+        session = requests.Session()
+        user_session = ApiManager(session)
+        user_pool.append(user_session)
+        return user_session
+
+    yield _create_user_session
+
+    for user in user_pool:
+        user.close_session()
+
+@pytest.fixture
+def super_admin(user_session):
+    new_session = user_session()
+
+    super_admin = User(
+        SuperAdminCreds.USERNAME,
+        SuperAdminCreds.PASSWORD,
+        ["SUPER_ADMIN"],
+        new_session)
+
+    super_admin.api.auth_api.authenticate(super_admin.creds)
+    return super_admin
+
+@pytest.fixture(scope="function")
+def creation_user_data(test_user):
+    updated_data = test_user.copy()
+    updated_data.update({
+        "verified": True,
+        "banned": False
+    })
+    return updated_data

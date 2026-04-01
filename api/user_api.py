@@ -6,17 +6,8 @@ class UserAPI(CustomRequester):
         super().__init__(session=session, base_url=BASE_URL)
         self.session = session
 
-    def get_user_info(self, user_id, expected_status=200):
-        """
-        Получение информации о пользователе.
-        :param user_id: ID пользователя.
-        :param expected_status: Ожидаемый статус-код.
-        """
-        return self.send_request(
-            method="GET",
-            endpoint=f"{GET_USER_INFO}{user_id}",
-            expected_status=expected_status
-        )
+    def get_user_info(self, user_locator):
+        return self.send_request("GET",f"user/{user_locator}")
 
     def get_user_logout(self, expected_status=200):
         """
@@ -60,11 +51,11 @@ class UserAPI(CustomRequester):
             expected_status=expected_status
         )
 
-    def create_admin_user_api(self, create_data, expected_status=201):
+    def create_user(self, user_data, expected_status=201):
         return self.send_request(
             method="POST",
             endpoint=CREATE_USER,
-            data=create_data,
+            data=user_data,
             expected_status=expected_status
         )
 

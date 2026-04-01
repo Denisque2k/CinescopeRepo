@@ -44,9 +44,10 @@ class MovieAPI(CustomRequester):
             expected_status=expected_status
         )
 
-    def get_genres_list(self, expected_status=200):
+    def create_genre(self, name, expected_status=201):
         return self.send_request(
-            method="GET",
+            method="POST",
             endpoint=GENRES_URL,
+            data=name,
             expected_status=expected_status
         )

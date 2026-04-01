@@ -39,3 +39,7 @@ class DataGenerator:
 
         return ''.join(password)
 
+    @staticmethod
+    def generate_random_genre():
+        random.string = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
+        return {"name": f"{random.string}"}
