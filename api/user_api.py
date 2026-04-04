@@ -6,8 +6,8 @@ class UserAPI(CustomRequester):
         super().__init__(session=session, base_url=BASE_URL)
         self.session = session
 
-    def get_user_info(self, user_locator):
-        return self.send_request("GET",f"user/{user_locator}")
+    def get_user_info(self, user_locator, expected_status):
+        return self.send_request("GET",f"user/{user_locator}", expected_status=expected_status)
 
     def get_user_logout(self, expected_status=200):
         """

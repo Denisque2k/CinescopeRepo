@@ -9,10 +9,11 @@ from utils.data_generator import DataGenerator
 from faker import Faker
 from custom_requester.custom_requester import CustomRequester
 from resources.user_creds import SuperAdminCreds
+from enums.roles import Roles
 
 faker = Faker()
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def test_user():
     """
     Генерация случайного пользователя для тестов.
@@ -27,7 +28,7 @@ def test_user():
         "fullName": random_name,
         "password": random_password,
         "passwordRepeat": random_password,
-        "roles": ["USER"]
+        "roles": [Roles.USER.value]
     }
 
 @pytest.fixture(scope="session")
@@ -136,7 +137,7 @@ def super_admin(user_session):
     super_admin = User(
         SuperAdminCreds.USERNAME,
         SuperAdminCreds.PASSWORD,
-        ["SUPER_ADMIN"],
+        list(Roles.SUPER_ADMIN.value),
         new_session)
 
     super_admin.api.auth_api.authenticate(super_admin.creds)
@@ -150,3 +151,30 @@ def creation_user_data(test_user):
         "banned": False
     })
     return updated_data
+
+@pytest.fixture
+def common_user(user_session, super_admin, creation_user_data):
+    new_session = user_session()
+
+    common_user = User(
+        creation_user_data["email"],
+        creation_user_data["password"],
+        list(Roles.USER.value),
+        new_session)
+
+    super_admin.api.user_api.create_user(creation_user_data)
+    common_user.api.auth_api.authenticate(common_user.creds)
+    return common_user
+
+@pytest.fixture
+def admin_user(user_session, super_admin, creation_user_data):
+    new_session = user_session()
+
+    admin_user = User(
+        creation_user_data["email"],
+        creation_user_data["password"],
+        list(Roles.ADMIN.value),
+        new_session)
+    super_admin.api.user_api.create_user(creation_user_data)
+    admin_user.api.auth_api.authenticate(admin_user.creds)
+    return admin_user
