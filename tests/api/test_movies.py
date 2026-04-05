@@ -1,7 +1,5 @@
-import constants
-from api.api_manager import ApiManager
-from api.api_manager_movies import ApiManagerMovies
-from utils.data_generator import DataGenerator
+from conftest import super_admin
+
 
 
 class TestMovieAPI:
@@ -33,7 +31,7 @@ class TestMovieAPI:
 
 
 
-    def test_create_movie(self, api_manager_movies, admin_creds, create_movie_data):
+    def test_create_movie(self, super_admin, create_movie_data):
         data = create_movie_data
         assert data["name"] in data.values(), "Поле name пустое"
         assert data["description"] in data.values(), "Поле 'description' пустое"
@@ -46,24 +44,31 @@ class TestMovieAPI:
         assert all_int, "Значения в полях 'price', 'genreId' должны быть целыми числами"
         assert data["location"] in ["MSK", "SPB"], f"Ожидалось значение 'MSK' или 'SPB', получено '{data["location"]}'"
         assert 0 < data["price"], "Некорректная сумма, ожидалось значение больше нуля"
-        api_manager_movies.auth_api.authenticate_admin(admin_creds)
-        response = api_manager_movies.movie_api.create_movie(data)
+        response = super_admin.api.movie_api.create_movie(data)
         response_data = response.json()
         common_keys = data.keys() & response_data.keys()
         assert all(data[k] == response_data[k] for k in common_keys)
 
-    def test_get_movie(self, api_manager_movies):
-       response = api_manager_movies.movie_api.get_movie(movie_id=26260)
-       response_data = response.json()
+    def test_get_movie(self, api_manager, super_admin, create_movie_data):
+       response = super_admin.api.movie_api.create_movie(create_movie_data).json()
+       movie_id = response["id"]
+       api_manager.movie_api.get_movie(movie_id=movie_id)
 
-    def test_delete_movie(self, api_manager_movies, admin_creds):
-        api_manager_movies.auth_api.authenticate_admin(admin_creds)
-        movie_id = "True"
+    def test_super_admin_delete_movie(self, api_manager, super_admin, create_movie_data):
+        response = super_admin.api.movie_api.create_movie(data=create_movie_data).json()
+        movie_id = response["id"]
         assert movie_id, "Проверьте поле ИД фильма"
         assert isinstance(movie_id, int), "Укажите корректное значение ИД фильма"
-        response = api_manager_movies.movie_api.delete_movie(movie_id=movie_id)
+        super_admin.api.movie_api.delete_movie(movie_id=movie_id)
 
-    def test_patch_movie(self, api_manager_movies, admin_creds):
+    def test_user_delete_movie(self, api_manager, super_admin, create_movie_data, common_user):
+        response = super_admin.api.movie_api.create_movie(data=create_movie_data).json()
+        movie_id = response["id"]
+        assert movie_id, "Проверьте поле ИД фильма"
+        assert isinstance(movie_id, int), "Укажите корректное значение ИД фильма"
+        common_user.api.movie_api.delete_movie(movie_id=movie_id, expected_status=403)
+
+    def test_super_admin_patch_movie(self, api_manager, super_admin, create_movie_data):
         data = {
             "name": "Here movie name",
             "description": "Here movie description",
@@ -84,20 +89,34 @@ class TestMovieAPI:
         assert all_int, "Значения в полях 'price', 'genreId' должны быть целыми числами"
         assert data["location"] in ["MSK", "SPB"], f"Ожидалось значение 'MSK' или 'SPB', получено '{data["location"]}'"
         assert 0 < data["price"], "Некорректная сумма, ожидалось значение больше нуля"
-        api_manager_movies.auth_api.authenticate_admin(admin_creds)
-        response = api_manager_movies.movie_api.patch_movie(movie_id=26260, data=data)
-        response_data = response.json()
+        response = super_admin.api.movie_api.create_movie(create_movie_data).json()
+        movie_id = response["id"]
+        super_admin.api.movie_api.patch_movie(movie_id=movie_id, data=data)
 
-    def test_get_genres(self, api_manager_movies):
-        response = api_manager_movies.movie_api.get_genres_list()
-        response_data = response.json()
-
-    def test_create_genre(self, api_manager_movies, admin_creds):
-        api_manager_movies.auth_api.authenticate_admin(admin_creds)
-        name = DataGenerator.generate_random_genre()
-        response = api_manager_movies.movie_api.create_genre(name)
-        response_data = response.json()
-
+    def test_patch_movie(self, api_manager, super_admin, create_movie_data, common_user):
+        data = {
+            "name": "Here movie name",
+            "description": "Here movie description",
+            "price": 350,
+            "location": "MSK",
+            "imageUrl": "https://image888.url",
+            "published": True,
+            "genreId": 1
+        }
+        assert data["name"] in data.values(), "Поле name пустое"
+        assert data["description"] in data.values(), "Поле 'description' пустое"
+        assert data["price"] in data.values(), "Поле 'price' пустое"
+        assert data["imageUrl"] in data.values(), "Поле 'imageUrl' пустое"
+        assert data["published"] in data.values(), "Поле 'published' пустое"
+        assert data["genreId"] in data.values(), "Поле 'genreId' пустое"
+        data_ints_values = (data["price"], data["genreId"])
+        all_int = all(isinstance(value, int) for value in data_ints_values)
+        assert all_int, "Значения в полях 'price', 'genreId' должны быть целыми числами"
+        assert data["location"] in ["MSK", "SPB"], f"Ожидалось значение 'MSK' или 'SPB', получено '{data["location"]}'"
+        assert 0 < data["price"], "Некорректная сумма, ожидалось значение больше нуля"
+        response = super_admin.api.movie_api.create_movie(create_movie_data).json()
+        movie_id = response["id"]
+        common_user.api.movie_api.patch_movie(movie_id=movie_id, data=data, expected_status=403)
 
 
 

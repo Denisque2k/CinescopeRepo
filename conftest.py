@@ -1,14 +1,13 @@
 import random
 from entities.user import User
 import requests
-from api.api_manager_movies import ApiManagerMovies
 from api.api_manager import ApiManager
 from constants import BASE_URL
 import pytest
 from utils.data_generator import DataGenerator
 from faker import Faker
 from custom_requester.custom_requester import CustomRequester
-from resources.user_creds import SuperAdminCreds
+from resources.user_creds import SuperAdminCreds, AdminCreds
 from enums.roles import Roles
 
 faker = Faker()
@@ -31,7 +30,7 @@ def test_user():
         "roles": [Roles.USER.value]
     }
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def registered_user(api_manager, test_user):
     """
     Фикстура для регистрации и получения данных зарегистрированного пользователя.
@@ -41,14 +40,6 @@ def registered_user(api_manager, test_user):
     registered_user = test_user.copy()
     registered_user["id"] = response_data["id"]
     return registered_user
-
-@pytest.fixture(scope="session")
-def admin_creds(api_manager):
-    return ["api1@gmail.com", "asdqwe123Q"]
-
-@pytest.fixture(scope="session")
-def user_creds(api_manager):
-    return ["testovyi@email.com", "12345678AaA"]
 
 @pytest.fixture(scope="session")
 def session():
@@ -66,9 +57,9 @@ def api_manager(session):
     """
     return ApiManager(session)
 
-@pytest.fixture(scope="session")
+"""@pytest.fixture(scope="session")
 def api_manager_movies(session):
-    return ApiManagerMovies(session)
+    return ApiManagerMovies(session)"""
 
 @pytest.fixture(scope="session")
 def requester():
@@ -92,17 +83,7 @@ def data_get_movies(session):
     }
 
 @pytest.fixture(scope="session")
-def create_genre(api_manager_movies, admin_creds):
-    api_manager_movies.auth_api.authenticate_admin(admin_creds)
-    name = DataGenerator.generate_random_genre()
-    response = api_manager_movies.movie_api.create_genre(name)
-    response_data = response.json()
-    return response_data["id"]
-
-
-
-@pytest.fixture(scope="session")
-def create_movie_data(session, api_manager_movies, create_genre):
+def create_movie_data():
     location_list = ["MSK", "SPB"]
     random_location = random.choice(location_list)
     return {
@@ -112,7 +93,7 @@ def create_movie_data(session, api_manager_movies, create_genre):
         "description": DataGenerator.generate_random_password(),
         "location": random_location,
         "published": True,
-        "genreId": create_genre
+        "genreId": 1
     }
 
 @pytest.fixture
@@ -137,11 +118,24 @@ def super_admin(user_session):
     super_admin = User(
         SuperAdminCreds.USERNAME,
         SuperAdminCreds.PASSWORD,
-        list(Roles.SUPER_ADMIN.value),
+        [Roles.SUPER_ADMIN.value],
         new_session)
 
     super_admin.api.auth_api.authenticate(super_admin.creds)
     return super_admin
+
+@pytest.fixture
+def admin_user(user_session):
+    new_session = user_session()
+
+    admin_user = User(
+        AdminCreds.USERNAME,
+        AdminCreds.PASSWORD,
+        [Roles.ADMIN.value],
+        new_session
+    )
+    admin_user.api.auth_api.authenticate(admin_user.creds)
+    return admin_user
 
 @pytest.fixture(scope="function")
 def creation_user_data(test_user):
@@ -159,22 +153,11 @@ def common_user(user_session, super_admin, creation_user_data):
     common_user = User(
         creation_user_data["email"],
         creation_user_data["password"],
-        list(Roles.USER.value),
+        [Roles.USER.value],
         new_session)
 
-    super_admin.api.user_api.create_user(creation_user_data)
+    create_response = super_admin.api.user_api.create_user(creation_user_data)
+    user_data = create_response.json()
+    common_user.id = user_data.get("id")
     common_user.api.auth_api.authenticate(common_user.creds)
     return common_user
-
-@pytest.fixture
-def admin_user(user_session, super_admin, creation_user_data):
-    new_session = user_session()
-
-    admin_user = User(
-        creation_user_data["email"],
-        creation_user_data["password"],
-        list(Roles.ADMIN.value),
-        new_session)
-    super_admin.api.user_api.create_user(creation_user_data)
-    admin_user.api.auth_api.authenticate(admin_user.creds)
-    return admin_user

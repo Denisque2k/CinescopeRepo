@@ -1,6 +1,5 @@
+from conftest import common_user, super_admin
 
-# В некоторых тестах я пока что ручками накидывал данные, прошу не бить палками((( для парочки проверок возможно понадобится сделать пару кредов.
-# Негативные сценарии также в некоторых тестах делал ручками.
 
 class TestAuthAPI:
     def test_register_user(self, api_manager, test_user):
@@ -29,12 +28,12 @@ class TestAuthAPI:
         assert "accessToken" in response_data, "Токен доступа отсутствует в ответе"
         assert response_data["user"]["email"] == registered_user["email"], "Email не совпадает"
 
-    def test_get_logout_user(self, api_manager, user_creds):
+    def test_get_logout_user(self, common_user, api_manager):
         """
         Тест на выход из учетной записи.
         """
-        api_manager.auth_api.authenticate_user(user_creds)
-        response = api_manager.user_api.get_user_logout(expected_status=200)
+        common_user.api.auth_api.authenticate(common_user.creds)
+        response = common_user.api.user_api.get_user_logout()
         response_data = response.text
         assert response_data == "OK", "Ошибка выхода из учетной записи"
 
@@ -43,8 +42,8 @@ class TestAuthAPI:
         Тест на обновление токена.
         """
         login_data = {
-            "email": "testovyi@email.com",
-            "password": "12345678AaA"
+            "email": registered_user["email"],
+            "password": registered_user["password"]
         }
         response = api_manager.auth_api.login_user(login_data)
         response_data = response.json()
@@ -56,45 +55,80 @@ class TestAuthAPI:
         assert response_get_data["refreshToken"] != response_data["refreshToken"], "Токен не изменился"
         #Так и не понял, должен ли обновляться accessToken
 
-    def test_admin_get_user(self, api_manager, admin_creds):
+    def test_super_admin_get_user(self, api_manager, super_admin, creation_user_data):
         """
-        Тест на запрос юзера по ИД админом.
+        Тест на запрос юзера по ИД суперадмином.
         """
-        api_manager.auth_api.authenticate_admin(admin_creds)
-        user_id = "55fad028-ab2c-4180-aedb-674d7fa0b465"
-        response_get = api_manager.user_api.get_user_info(user_id, expected_status=200)
+        response = super_admin.api.user_api.create_user(creation_user_data).json()
+        user_id = response["id"]
+        response_get = super_admin.api.user_api.get_user_info(user_id)
         response_data = response_get.json()
         assert response_data, "Пользователя не существует"
         assert response_data["id"] == user_id, "ИД не совпадает"
 
-    def test_get_user(self, api_manager, user_creds):
+    def test_admin_get_user(self, api_manager, admin_user, creation_user_data):
+        """
+        Тест на запрос юзера по ИД админом.
+        """
+        response = admin_user.api.user_api.create_user(creation_user_data).json()
+        user_id = response["id"]
+        response_get = admin_user.api.user_api.get_user_info(user_id)
+        response_data = response_get.json()
+        assert response_data, "Пользователя не существует"
+        assert response_data["id"] == user_id, "ИД не совпадает"
+
+    def test_get_user(self, api_manager, common_user):
         """
         Тест на запрос юзера по ИД обычным юзером.
         """
-        api_manager.auth_api.authenticate_user(user_creds)
-        user_id = "55fad028-ab2c-4180-aedb-674d7fa0b465"
-        response = api_manager.user_api.get_user_info(user_id, expected_status=200)
-        response_data = response.json()
+        common_user.api.user_api.get_user_info(common_user.email, expected_status=403)
 
-    def test_delete_user(self, api_manager, user_creds):
+    def test_super_admin_delete_user(self, api_manager, super_admin, creation_user_data):
         """
-        Тест на удаление юзера по ИД обычным юзером.
+        Тест на удаление юзера по ИД суперадмином.
         """
-        api_manager.auth_api.authenticate_user(user_creds)
-        user_id = "8ef023ac-ab74-4e24-8a99-172c65163d07"
-        api_manager.user_api.delete_user(user_id, expected_status=200)
-        #Чел может сам себя удалить, просто ответ АПИшки прилетает пустой
-        #Пока что данные подкдывал ручками
-    def test_admin_delete_user(self, api_manager, admin_creds):
+        response = super_admin.api.user_api.create_user(creation_user_data).json()
+        user_id = response["id"]
+        super_admin.api.user_api.delete_user(user_id=user_id)
+
+    def test_admin_delete_user(self, api_manager, admin_user, creation_user_data):
         """
         Тест на удаление юзера по ИД админом.
         """
-        api_manager.auth_api.authenticate_admin(admin_creds)
-        user_id = "8ef023ac-ab74-4e24-8a99-172c65163d07"
-        api_manager.user_api.delete_user(user_id, expected_status=200)
-        #И здесь чел удалится)
+        response = admin_user.api.user_api.create_user(creation_user_data).json()
+        user_id = response["id"]
+        admin_user.api.user_api.delete_user(user_id=user_id)
 
-    def test_admin_patch_method(self, api_manager, admin_creds):
+    def test_delete_user(self, api_manager, common_user):
+        """
+        Тест на удаление юзера по ИД обычным юзером.
+        """
+        user_id = common_user.id
+        common_user.api.auth_api.authenticate(common_user.creds)
+        common_user.api.user_api.delete_user(user_id=user_id)
+
+    def test_super_admin_patch_method(self, api_manager, super_admin, creation_user_data):
+        """
+        Тест на изменение данных юзера по ИД суперадмином.
+        """
+        patch_data = {
+            "roles": [
+                "ADMIN"
+                    ],
+            "verified": True,
+            "banned": False
+        }
+        allowed_roles = {"USER", "ADMIN", "SUPER_ADMIN"}
+        assert patch_data["roles"], "Поле роль пустое"
+        assert all(role in allowed_roles for role in patch_data["roles"]), "Есть недопустимые роли"
+        response = super_admin.api.user_api.create_user(creation_user_data).json()
+        user_id = response["id"]
+        response_patch_user = super_admin.api.user_api.patch_user(patch_data, user_id)
+        response_data = response_patch_user.json()
+        assert response_data["roles"], "Поле роль пустое"
+        assert all(role in allowed_roles for role in response_data["roles"]), "Есть недопустимые роли"
+
+    def test_admin_patch_method(self, api_manager, admin_user, creation_user_data):
         """
         Тест на изменение данных юзера по ИД админом.
         """
@@ -105,16 +139,17 @@ class TestAuthAPI:
             "verified": True,
             "banned": False
         }
-        allowed_roles = ["USER", "ADMIN", "SUPER_ADMIN"]
-        user_id = "55fad028-ab2c-4180-aedb-674d7fa0b465"
-        api_manager.auth_api.authenticate_admin(admin_creds)
-        response = api_manager.user_api.patch_user(patch_data, user_id, expected_status=200)
-        response_data = response.json()
-        assert response_data["roles"], "Поле роль пустое"
+        allowed_roles = {"USER", "ADMIN", "SUPER_ADMIN"}
+        assert patch_data["roles"], "Поле роль пустое"
         assert all(role in allowed_roles for role in patch_data["roles"]), "Есть недопустимые роли"
+        response = admin_user.api.user_api.create_user(creation_user_data).json()
+        user_id = response["id"]
+        response_patch_user = admin_user.api.user_api.patch_user(patch_data, user_id)
+        response_data = response_patch_user.json()
+        assert response_data["roles"], "Поле роль пустое"
+        assert all(role in allowed_roles for role in response_data["roles"]), "Есть недопустимые роли"
 
-
-    def test_user_patch_method(self, api_manager, user_creds):
+    def test_user_patch_method(self, api_manager, common_user):
         """
         Тест на изменение данных юзера по ИД обычным юзером.
         """
@@ -125,46 +160,61 @@ class TestAuthAPI:
             "verified": True,
             "banned": False
         }
-        allowed_roles = ["USER", "ADMIN", "SUPER_ADMIN"]
-        user_id = "55fad028-ab2c-4180-aedb-674d7fa0b465"
-        api_manager.auth_api.authenticate_user(user_creds)
-        response = api_manager.user_api.patch_user(patch_data, user_id, expected_status=200)
-        response_data = response.json()
-        assert response_data["roles"], "Поле роль пустое"
-        assert all(role in allowed_roles for role in patch_data["roles"]), "Есть недопустимые роли"
+        allowed_roles = {"USER", "ADMIN", "SUPER_ADMIN"}
+        assert patch_data.get("roles") in allowed_roles, "Есть недопустимые роли"
+        user_id = common_user.id
+        common_user.api.auth_api.authenticate(common_user.creds)
+        common_user.api.user_api.patch_user(patch_data, user_id=user_id, expected_status=403)
 
 
-    def test_admin_create_user(self, api_manager, admin_creds, test_user):
+    def test_super_admin_create_user(self, api_manager, super_admin, creation_user_data):
+        """
+        Тест на создание юзера суперадмином.
+        """
+        response = super_admin.api.user_api.create_user(creation_user_data).json()
+        assert response.get('id') and response['id'] != '', "ID должен быть не пустым"
+        assert response.get('email') == creation_user_data['email']
+        assert response.get('fullName') == creation_user_data['fullName']
+        assert response.get('roles', []) == creation_user_data['roles']
+        assert response.get('verified') is True
+
+    def test_admin_create_user(self, api_manager, admin_user, creation_user_data):
         """
         Тест на создание юзера админом.
         """
-        create_user = {
-        "fullName": test_user["fullName"],
-        "email": test_user["email"],
-        "password": test_user["password"],
-        "verified": False,
-        "banned": False
-    }
-        api_manager.auth_api.authenticate_admin(admin_creds)
-        response = api_manager.user_api.create_admin_user_api(create_user)
-        response_data = response.json()
-        assert "id" in response_data, "ID пользователя отсутствует в ответе"
-        assert "roles" in response_data, "Роли пользователя отсутствуют в ответе"
-        assert "USER" in response_data["roles"], "Роль USER должна быть у пользователя"
+        response = admin_user.api.user_api.create_user(creation_user_data).json()
+        assert response.get('id') and response['id'] != '', "ID должен быть не пустым"
+        assert response.get('email') == creation_user_data['email']
+        assert response.get('fullName') == creation_user_data['fullName']
+        assert response.get('roles', []) == creation_user_data['roles']
+        assert response.get('verified') is True
 
-    def test_user_create_user(self, api_manager, user_creds, create_user):
+    def test_user_create_user(self, api_manager, common_user, creation_user_data):
         """
         Тест на создание юзера обычным юзером.
         """
-        api_manager.auth_api.authenticate_user(user_creds)
-        response = api_manager.user_api.create_admin_user_api(create_user)
+        common_user.api.auth_api.authenticate(common_user.creds)
+        common_user.api.user_api.create_user(creation_user_data, expected_status=403)
+
+
+    def test_get_super_admin_users_list(self, api_manager, super_admin):
+        """
+        Тест на запрос списка юзеров с Парамами суперадмином.
+        """
+        params = {"roles": "SUPER_ADMIN",
+                  "pageSize": 4,
+                  "page": 1,
+                  "createAt": "asc"}
+        allowed_roles = {"USER", "ADMIN", "SUPER_ADMIN"}
+        assert params.get("roles") in allowed_roles, "Есть недопустимые роли"
+        assert isinstance(params["pageSize"], int), "Параметр PageSize должен быть целым числом"
+        assert isinstance(params["page"], int), "Параметр Page должен быть целым числом"
+        response = super_admin.api.user_api.get_list_users(params=params)
         response_data = response.json()
-        assert "id" in response_data, "ID пользователя отсутствует в ответе"
-        assert "roles" in response_data, "Роли пользователя отсутствуют в ответе"
-        assert "USER" in response_data["roles"], "Роль USER должна быть у пользователя"
+        assert isinstance(response_data["pageSize"], int), "Параметр PageSize должен быть целым числом"
+        assert isinstance(response_data["page"], int), "Параметр Page должен быть целым числом"
 
-
-    def test_get_admin_users_list(self, api_manager, admin_creds):
+    def test_get_admin_users_list(self, api_manager, admin_user):
         """
         Тест на запрос списка юзеров с Парамами админом.
         """
@@ -172,22 +222,25 @@ class TestAuthAPI:
                   "pageSize": 4,
                   "page": 1,
                   "createAt": "asc"}
-        api_manager.auth_api.authenticate_admin(admin_creds)
-        response = api_manager.user_api.get_list_users(params=params)
+        allowed_roles = {"USER", "ADMIN", "SUPER_ADMIN"}
+        assert params.get("roles") in allowed_roles, "Есть недопустимые роли"
+        assert isinstance(params["pageSize"], int), "Параметр PageSize должен быть целым числом"
+        assert isinstance(params["page"], int), "Параметр Page должен быть целым числом"
+        response = admin_user.api.user_api.get_list_users(params=params)
         response_data = response.json()
         assert isinstance(response_data["pageSize"], int), "Параметр PageSize должен быть целым числом"
         assert isinstance(response_data["page"], int), "Параметр Page должен быть целым числом"
 
-    def test_get_user_list(self, api_manager, user_creds):
+    def test_get_user_list(self, api_manager, common_user):
         """
         Тест на запрос списка юзеров с Парамами обычным юзером.
         """
         params = {"roles": "SUPER_ADMIN",
                   "pageSize": 4,
-                  "page": 1.5,
+                  "page": 1,
                   "createAt": "asc"}
-        api_manager.auth_api.authenticate_user(user_creds)
-        response = api_manager.user_api.get_list_users(params=params)
-        response_data = response.json()
-        assert isinstance(response_data["pageSize"], int), "Параметр PageSize должен быть целым числом"
-        assert isinstance(response_data["page"], int), "Параметр Page должен быть целым числом"
+        allowed_roles = {"USER", "ADMIN", "SUPER_ADMIN"}
+        assert params.get("roles") in allowed_roles, "Есть недопустимые роли"
+        assert isinstance(params["pageSize"], int), "Параметр PageSize должен быть целым числом"
+        assert isinstance(params["page"], int), "Параметр Page должен быть целым числом"
+        common_user.api.user_api.get_list_users(params=params, expected_status=403)
