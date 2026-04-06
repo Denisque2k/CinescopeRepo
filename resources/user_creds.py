@@ -1,7 +1,12 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 class SuperAdminCreds:
-    USERNAME = 'api1@gmail.com'
-    PASSWORD = 'asdqwe123Q'
+    USERNAME = os.getenv('SUPER_ADMIN_USERNAME')
+    PASSWORD = os.getenv('SUPER_ADMIN_PASSWORD')
 
 class AdminCreds:
-    USERNAME = 'kekybr3sw67@gmail.com'
-    PASSWORD = 'Oj8HjnHF#we7xS|F'
+    USERNAME = os.getenv('ADMIN_USERNAME')
+    PASSWORD = os.getenv('ADMIN_PASSWORD')

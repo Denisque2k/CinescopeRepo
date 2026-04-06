@@ -1,17 +1,26 @@
+import pytest
+
 from conftest import super_admin
 
 
 
 class TestMovieAPI:
-    def test_get_movies(self, api_manager_movies):
+    @pytest.mark.parametrize("min_price, max_price, locations, genre_id, expected_status", [
+        (1, 1000, ["MSK"], 1, 200),
+        (500, 2000, ["SPB"], 1, 200),
+        (1, 500, ["MSK", "SPB"], 1, 200),
+        (1000, 5000, [], 1, 200),
+
+    ])
+    def test_get_movies(self, api_manager, min_price, max_price, locations, genre_id, expected_status):
         params = {
         "pageSize": 1,
         "page": 1,
-        "minPrice": 1,
-        "maxPrice": 1000,
-        "locations": ["MSK"],
+        "minPrice": min_price,
+        "maxPrice": max_price,
+        "locations": locations,
         "published": True,
-        "genreId": 1,
+        "genreId": genre_id,
         "createdAt": "asc"
     }
         assert params["pageSize"] in params.values(), "Поле pageSize пустое"
@@ -26,7 +35,7 @@ class TestMovieAPI:
         assert all_int, "Значения в полях 'pageSize', 'page', 'minPrice', 'maxPrice', 'genreId' должны быть числами"
         assert all(loc in ["MSK", "SPB"] for loc in params["locations"]), f"Ожидалось значение 'MSK' или 'SPB', получено '{params["locations"]}'"
         assert 0 < params["minPrice"] < params["maxPrice"], "Некорректная сумма, проверьте значения милимальной и максимальной суммы"
-        response = api_manager_movies.movie_api.get_movies_for_params(params=params, excepted_status=200)
+        response = api_manager.movie_api.get_movies_for_params(params=params, excepted_status=200)
         response_data = response.json()
 
 
@@ -61,6 +70,7 @@ class TestMovieAPI:
         assert isinstance(movie_id, int), "Укажите корректное значение ИД фильма"
         super_admin.api.movie_api.delete_movie(movie_id=movie_id)
 
+    @pytest.mark.slow
     def test_user_delete_movie(self, api_manager, super_admin, create_movie_data, common_user):
         response = super_admin.api.movie_api.create_movie(data=create_movie_data).json()
         movie_id = response["id"]
@@ -70,7 +80,7 @@ class TestMovieAPI:
 
     def test_super_admin_patch_movie(self, api_manager, super_admin, create_movie_data):
         data = {
-            "name": "Here movie name",
+            "name": create_movie_data["name"],
             "description": "Here movie description",
             "price": 350,
             "location": "MSK",
@@ -93,6 +103,7 @@ class TestMovieAPI:
         movie_id = response["id"]
         super_admin.api.movie_api.patch_movie(movie_id=movie_id, data=data)
 
+    @pytest.mark.slow
     def test_patch_movie(self, api_manager, super_admin, create_movie_data, common_user):
         data = {
             "name": "Here movie name",

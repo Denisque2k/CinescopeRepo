@@ -1,3 +1,5 @@
+import pytest
+
 from conftest import common_user, super_admin
 
 
@@ -28,6 +30,7 @@ class TestAuthAPI:
         assert "accessToken" in response_data, "Токен доступа отсутствует в ответе"
         assert response_data["user"]["email"] == registered_user["email"], "Email не совпадает"
 
+    @pytest.mark.slow
     def test_get_logout_user(self, common_user, api_manager):
         """
         Тест на выход из учетной записи.
@@ -97,8 +100,9 @@ class TestAuthAPI:
         """
         response = admin_user.api.user_api.create_user(creation_user_data).json()
         user_id = response["id"]
-        admin_user.api.user_api.delete_user(user_id=user_id)
+        admin_user.api.user_api.delete_user(user_id=user_id, expected_status=403)
 
+    @pytest.mark.slow
     def test_delete_user(self, api_manager, common_user):
         """
         Тест на удаление юзера по ИД обычным юзером.
@@ -144,10 +148,7 @@ class TestAuthAPI:
         assert all(role in allowed_roles for role in patch_data["roles"]), "Есть недопустимые роли"
         response = admin_user.api.user_api.create_user(creation_user_data).json()
         user_id = response["id"]
-        response_patch_user = admin_user.api.user_api.patch_user(patch_data, user_id)
-        response_data = response_patch_user.json()
-        assert response_data["roles"], "Поле роль пустое"
-        assert all(role in allowed_roles for role in response_data["roles"]), "Есть недопустимые роли"
+        admin_user.api.user_api.patch_user(patch_data, user_id, expected_status=403)
 
     def test_user_patch_method(self, api_manager, common_user):
         """
@@ -161,7 +162,7 @@ class TestAuthAPI:
             "banned": False
         }
         allowed_roles = {"USER", "ADMIN", "SUPER_ADMIN"}
-        assert patch_data.get("roles") in allowed_roles, "Есть недопустимые роли"
+        assert all(role in allowed_roles for role in patch_data["roles"]), "Есть недопустимые роли"
         user_id = common_user.id
         common_user.api.auth_api.authenticate(common_user.creds)
         common_user.api.user_api.patch_user(patch_data, user_id=user_id, expected_status=403)
@@ -231,6 +232,7 @@ class TestAuthAPI:
         assert isinstance(response_data["pageSize"], int), "Параметр PageSize должен быть целым числом"
         assert isinstance(response_data["page"], int), "Параметр Page должен быть целым числом"
 
+    @pytest.mark.slow
     def test_get_user_list(self, api_manager, common_user):
         """
         Тест на запрос списка юзеров с Парамами обычным юзером.

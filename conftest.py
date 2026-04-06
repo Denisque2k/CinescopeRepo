@@ -82,7 +82,7 @@ def data_get_movies(session):
         "createdAt": "asc"
     }
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def create_movie_data():
     location_list = ["MSK", "SPB"]
     random_location = random.choice(location_list)
