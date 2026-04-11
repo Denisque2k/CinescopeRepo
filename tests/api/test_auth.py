@@ -59,6 +59,7 @@ class TestAuthAPI:
         assert response_get_tokens.refreshToken != response_data.refreshToken, "refreshToken не обновился"
 
     def test_unauthorized_refresh_tokens(self, api_manager):
+        api_manager.user_api.get_user_logout(expected_status=200)
         api_manager.user_api.get_refresh_tokens(expected_status=401)
 
     def test_super_admin_get_user(self, api_manager, super_admin, creation_user_data: TestUser):
