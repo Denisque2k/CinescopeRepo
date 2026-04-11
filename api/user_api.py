@@ -28,7 +28,7 @@ class UserAPI(CustomRequester):
         return self.send_request(
             method="GET",
             endpoint=GET_REFRESH_TOKENS,
-            expected_status=expected_status
+            expected_status=expected_status,
         )
 
     def delete_user(self, user_id, expected_status=200):
