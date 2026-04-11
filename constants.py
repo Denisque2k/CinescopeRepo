@@ -27,3 +27,11 @@ DELETE_MOVIE = "movies/"
 PATCH_MOVIE = "movies/"
 
 GENRES_URL = "genres"
+
+"""
+Colors for Custom Requester
+"""
+
+GREEN = '\033[32m'
+RED = '\033[31m'
+RESET = '\033[0m'

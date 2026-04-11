@@ -70,13 +70,29 @@ class TestMovieAPI:
         assert isinstance(movie_id, int), "Укажите корректное значение ИД фильма"
         super_admin.api.movie_api.delete_movie(movie_id=movie_id)
 
+    users_fixtures = [
+        pytest.param("admin_user_with_creds", 403, "Получает запрет", id="admin_user_with_creds"),
+        pytest.param("common_user", 403, "Получает запрет", id="common_user"),
+    ]
+    @pytest.mark.parametrize("fixture_name, expected_status, description", users_fixtures)
+    def test_delete_movie(self, request, fixture_name, expected_status, description, api_manager, super_admin, admin_user_with_creds, common_user, create_movie_data):
+        name_fixture = request.getfixturevalue(fixture_name)
+
+        create_movie_response = super_admin.api.movie_api.create_movie(data=create_movie_data)
+        movie_id = create_movie_response.json()["id"]
+
+        delete_response = name_fixture.api.movie_api.delete_movie(movie_id=movie_id, expected_status=expected_status)
+        assert delete_response.status_code == expected_status, f"{description}"
+        if expected_status == 200:
+            assert name_fixture.api.movie_api.get_movie(movie_id=movie_id, expected_status=404).status_code == 404
     @pytest.mark.slow
-    def test_user_delete_movie(self, api_manager, super_admin, create_movie_data, common_user):
+    def test_super_admin_delete_movie(self, api_manager, super_admin, create_movie_data):
         response = super_admin.api.movie_api.create_movie(data=create_movie_data).json()
         movie_id = response["id"]
         assert movie_id, "Проверьте поле ИД фильма"
         assert isinstance(movie_id, int), "Укажите корректное значение ИД фильма"
-        common_user.api.movie_api.delete_movie(movie_id=movie_id, expected_status=403)
+        super_admin.api.movie_api.delete_movie(movie_id=movie_id)
+        assert super_admin.api.movie_api.get_movie(movie_id=movie_id, expected_status=404).status_code == 404
 
     def test_super_admin_patch_movie(self, api_manager, super_admin, create_movie_data):
         data = {
