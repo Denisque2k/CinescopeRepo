@@ -63,6 +63,3 @@ class DataGenerator:
             'banned': False,
             'roles': '{USER}'
         }
-
-unique_id = uuid.uuid4()
-print(unique_id)
