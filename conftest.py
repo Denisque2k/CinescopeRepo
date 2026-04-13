@@ -1,16 +1,20 @@
+import datetime
 import random
 from entities.user import User
 import requests
 from api.api_manager import ApiManager
 from constants import BASE_URL
 import pytest
-
+from sqlalchemy.orm import Session
+from db_requester.db_client import get_db_session
 from models.base_models import TestUser, RegisterUserResponse
 from utils.data_generator import DataGenerator
 from faker import Faker
 from custom_requester.custom_requester import CustomRequester
 from resources.user_creds import SuperAdminCreds, AdminCreds
 from enums.roles import Roles
+from db_requester.db_helpers import DBHelper
+from uuid import uuid4
 
 faker = Faker()
 
@@ -174,3 +178,48 @@ def admin_user_with_creds(user_session, creation_user_data: TestUser):
 
     admin_user_wth_creds.api.auth_api.authenticate(admin_user_wth_creds.creds)
     return admin_user_wth_creds
+
+@pytest.fixture(scope="module")
+def db_session() -> Session:
+    """
+    Фикстура, которая создает и возвращает сессию для работы с базой данных
+    После завершения теста сессия автоматически закрывается
+    """
+    db_session = get_db_session()
+    yield db_session
+    db_session.close()
+
+@pytest.fixture(scope="function")
+def db_helper(db_session) -> DBHelper:
+    """
+    Фикстура для экземпляра хелпера
+    """
+    db_helper = DBHelper(db_session)
+    return db_helper
+
+@pytest.fixture(scope="function")
+def created_test_user(db_helper):
+    """
+    Фикстура, которая создает тестового пользователя в БД
+    и удаляет его после завершения теста
+    """
+    user = db_helper.create_test_user(DataGenerator.generate_user_data())
+    yield user
+    # Cleanup после теста
+    if db_helper.get_user_by_id(user.id):
+        db_helper.delete_user(user)
+
+@pytest.fixture(scope="function")
+def create_test_movie_hardcode():
+    return {
+        'id': 101010,
+        'name': 'Фильмец для теста',
+        'price': 500,
+        'description': 'Тестовый фильм, так чисто, чтобы помусолить там, как оно крч воркает там, пук, воооот',
+        'image_url': 'Имаге.урэлэ',
+        'location': 'SPB',
+        'published': True,
+        'rating': 5,
+        'genre_id': 1,
+        'created_at': datetime.datetime.now()
+    }
