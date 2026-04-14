@@ -7,13 +7,14 @@ from models.base_models import ResponseMovie, RequestMovie, RequestGetMovie
 @allure.feature("Movies API")
 class TestMovieAPI:
 
+    @pytest.mark.api
     @allure.story("Get Movies with Filters")
     @allure.description("Тест проверяет получение списка фильмов с различными фильтрами: цена, локация, жанр. Используется параметризация для проверки разных комбинаций.")
     @pytest.mark.parametrize("min_price, max_price, locations, genre_id, expected_status", [
-        (1, 1000, ["MSK"], 1, 200),
+        (1, 1000, ["SPB"], 1, 200),
         (500, 2000, ["SPB"], 1, 200),
         (1, 500, ["MSK", "SPB"], 1, 200),
-        (1000, 5000, [], 1, 200),
+        (1000, 5000, [""], 1, 400),
     ])
     def test_get_movies(self, api_manager, min_price, max_price, locations, genre_id, expected_status):
         params = {
@@ -38,14 +39,13 @@ class TestMovieAPI:
             params_ints_values = (params["pageSize"], params["page"], params["minPrice"], params["maxPrice"], params["genreId"])
             all_int = all(isinstance(value, int) for value in params_ints_values)
             assert all_int, "Значения в полях 'pageSize', 'page', 'minPrice', 'maxPrice', 'genreId' должны быть числами"
-        with allure.step("Проверяем, что значения локаций корректны"):
-            assert all(loc in ["MSK", "SPB"] for loc in params["locations"]), f"Ожидалось значение 'MSK' или 'SPB', получено '{params['locations']}'"
         with allure.step("Проверяем, что минимальная цена меньше максимальной"):
             assert 0 < params["minPrice"] < params["maxPrice"], "Некорректная сумма, проверьте значения милимальной и максимальной суммы"
         with allure.step("Отправляем запрос на получение списка фильмов с фильтрами"):
-            response = api_manager.movie_api.get_movies_for_params(params=params, excepted_status=200)
+            response = api_manager.movie_api.get_movies_for_params(params=params, excepted_status=expected_status)
         response_data = response.json()
 
+    @pytest.mark.api
     @allure.story("Create Movie")
     @allure.description("Тест проверяет создание нового фильма через API суперадмином. Проверяются обязательные поля и корректность данных в ответе.")
     def test_create_movie(self, api_manager, super_admin, create_movie_data: RequestMovie):
@@ -76,6 +76,7 @@ class TestMovieAPI:
             assert response_data.name == data.name, f"Название фильма не совпадает, ожидалось {data.name}"
             assert response_data.price == data.price, f"Цена фильма не совпадает, ожидалось {data.price}"
 
+    @pytest.mark.api
     @allure.story("Get Movie by ID")
     @allure.description("Тест проверяет получение информации о фильме по его ID после создания.")
     def test_get_movie(self, api_manager, super_admin, create_movie_data):
@@ -90,6 +91,7 @@ class TestMovieAPI:
         pytest.param("common_user", 403, "Получает запрет", id="common_user"),
     ]
 
+    @pytest.mark.api
     @allure.story("Delete Movie by Non-Super Admin")
     @allure.description("Тест проверяет, что пользователи без прав суперадмина не могут удалить фильм. Используется параметризация для проверки разных ролей.")
     @pytest.mark.parametrize("fixture_name, expected_status, description", users_fixtures)
@@ -107,6 +109,7 @@ class TestMovieAPI:
             with allure.step("Если удаление прошло успешно, проверяем, что фильм больше не существует"):
                 assert name_fixture.api.movie_api.get_movie(movie_id=movie_id, expected_status=404).status_code == 404
 
+    @pytest.mark.api
     @allure.story("Delete Movie by Super Admin")
     @allure.description("Тест проверяет, что суперадмин может успешно удалить фильм. Проверяется, что после удаления фильм недоступен.")
     @pytest.mark.slow
@@ -122,6 +125,7 @@ class TestMovieAPI:
         with allure.step("Проверяем, что фильм больше не доступен (возвращает 404)"):
             api_manager.movie_api.get_movie(movie_id=movie_id, expected_status=404)
 
+    @pytest.mark.api
     @allure.story("Update Movie by Super Admin")
     @allure.description("Тест проверяет, что суперадмин может обновить данные фильма. Проверяются обязательные поля и корректность обновления.")
     def test_super_admin_patch_movie(self, api_manager, super_admin, create_movie_data):
@@ -158,6 +162,7 @@ class TestMovieAPI:
             assert response_data.name == data.name, f"Название фильма не совпадает, ожидалось {data.name}"
             assert response_data.price == data.price, f"Цена фильма не совпадает, ожидалось {data.price}"
 
+    @pytest.mark.api
     @allure.story("Update Movie by Regular User")
     @allure.description("Тест проверяет, что обычный пользователь не может обновить данные фильма. Ожидается ошибка 403.")
     @pytest.mark.slow

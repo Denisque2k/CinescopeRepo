@@ -9,6 +9,7 @@ from models.base_models import RegisterUserResponse, TestUser, LoginUserRequest,
 @allure.feature("Authentication & Authorization API")
 class TestAuthAPI:
 
+    @pytest.mark.api
     @allure.story("User Registration")
     @allure.description("Тест проверяет регистрацию нового пользователя. Проверяется соответствие email, наличие ID и установленной роли USER.")
     def test_register_user(self, api_manager, test_user):
@@ -26,6 +27,7 @@ class TestAuthAPI:
         with allure.step("Проверяем, что у пользователя установлена роль USER"):
             assert response_data.roles == [Roles.USER], "Роль USER должна быть у пользователя"
 
+    @pytest.mark.api
     @allure.story("User Registration and Login")
     @allure.description("Тест проверяет успешную регистрацию и последующую авторизацию пользователя. Проверяется наличие accessToken и корректность данных пользователя.")
     def test_register_and_login_user(self, api_manager, registered_user: TestUser):
@@ -48,6 +50,7 @@ class TestAuthAPI:
         with allure.step(f"Проверяем имя пользователя в ответе"):
             assert response_data.user.fullName == registered_user.fullName, f"Имя не совпадает, ожидалось {registered_user.fullName}"
 
+    @pytest.mark.api
     @allure.story("User Logout")
     @allure.description("Тест проверяет выход пользователя из учетной записи. Проверяется успешный ответ сервера.")
     @pytest.mark.slow
@@ -62,6 +65,7 @@ class TestAuthAPI:
         with allure.step("Проверяем успешное завершение сессии"):
             assert response_data == "OK", "Ошибка выхода из учетной записи"
 
+    @pytest.mark.api
     @allure.story("Token Refresh")
     @allure.description("Тест проверяет обновление access и refresh токенов. Проверяется, что новые токены отличаются от старых и присутствуют в ответе.")
     def test_get_refresh_tokens(self, api_manager, registered_user: TestUser):
@@ -93,6 +97,7 @@ class TestAuthAPI:
         with allure.step("Проверяем, что refreshToken обновился"):
             assert response_get_tokens.refreshToken != response_data.refreshToken, "refreshToken не обновился"
 
+    @pytest.mark.api
     @allure.story("Unauthorized Token Refresh")
     @allure.description("Тест проверяет, что попытка обновить токены без активной сессии приводит к ошибке 401.")
     def test_unauthorized_refresh_tokens(self, api_manager):
@@ -101,6 +106,7 @@ class TestAuthAPI:
         with allure.step("Пытаемся обновить токены без авторизации"):
             api_manager.user_api.get_refresh_tokens(expected_status=401)
 
+    @pytest.mark.api
     @allure.story("Get User Info by ID")
     @allure.description("Тест проверяет, что суперадмин может получить информацию о пользователе по его ID. Проверяется соответствие ID.")
     def test_super_admin_get_user(self, api_manager, super_admin, creation_user_data: TestUser):
@@ -121,6 +127,7 @@ class TestAuthAPI:
         with allure.step("Проверяем, что ID в ответе совпадает с созданным"):
             assert response_data_user.id == user_id, "ИД не совпадает"
 
+    @pytest.mark.api
     @allure.story("Get User Info by ID")
     @allure.description("Тест проверяет, что администратор может получить информацию о пользователе по его ID. Проверяется соответствие ID.")
     def test_admin_get_user(self, api_manager, admin_user_with_creds, creation_user_data: TestUser):
@@ -141,6 +148,7 @@ class TestAuthAPI:
         with allure.step("Проверяем, что ID в ответе совпадает с созданным"):
             assert response_data_user.id == user_id, "ИД не совпадает"
 
+    @pytest.mark.api
     @allure.story("Get User Info by ID")
     @allure.description("Тест проверяет, что обычный пользователь не может получить информацию о другом пользователе по ID. Ожидается ошибка 403.")
     def test_get_user(self, api_manager, common_user):
@@ -150,6 +158,7 @@ class TestAuthAPI:
         with allure.step("Пытаемся запросить информацию о себе как обычный пользователь (должно быть запрещено)"):
             common_user.api.user_api.get_user_info(common_user.email, expected_status=403)
 
+    @pytest.mark.api
     @allure.story("Delete User by ID")
     @allure.description("Тест проверяет, что суперадмин может удалить пользователя по ID. Также проверяется, что повторное удаление невозможно (ошибка 404).")
     def test_super_admin_delete_user(self, api_manager, super_admin, creation_user_data: TestUser):
@@ -166,6 +175,7 @@ class TestAuthAPI:
         with allure.step("Проверяем, что повторное удаление вызывает ошибку 404"):
             super_admin.api.user_api.delete_user(user_id=user_id, expected_status=404)
 
+    @pytest.mark.api
     @allure.story("Delete User by ID")
     @allure.description("Тест проверяет, что администратор НЕ может удалить пользователя по ID. Ожидается ошибка 403.")
     def test_admin_delete_user(self, api_manager, admin_user_with_creds, creation_user_data: TestUser):
@@ -180,6 +190,7 @@ class TestAuthAPI:
         with allure.step("Пытаемся удалить пользователя как админ (должно быть запрещено)"):
             admin_user_with_creds.api.user_api.delete_user(user_id=user_id, expected_status=403)
 
+    @pytest.mark.api
     @allure.story("Delete User by ID")
     @allure.description("Тест проверяет, что обычный пользователь может удалить свой собственный аккаунт. Повторная попытка приводит к ошибке 401.")
     @pytest.mark.slow
@@ -196,6 +207,7 @@ class TestAuthAPI:
         with allure.step("Проверяем, что повторное удаление вызывает ошибку 401"):
             common_user.api.user_api.delete_user(user_id=user_id, expected_status=401)
 
+    @pytest.mark.api
     @allure.story("Update User Data by ID")
     @allure.description("Тест проверяет, что суперадмин может обновить данные пользователя (роль, верификация, бан). Проверяется успешность обновления.")
     def test_super_admin_patch_method(self, api_manager, super_admin, creation_user_data: TestUser):
@@ -226,6 +238,7 @@ class TestAuthAPI:
             assert response_data_after_patch.roles, "Поле роль пустое"
             assert all(role in allowed_roles for role in response_data_after_patch.roles), "Есть недопустимые роли"
 
+    @pytest.mark.api
     @allure.story("Update User Data by ID")
     @allure.description("Тест проверяет, что администратор НЕ может обновить данные пользователя. Ожидается ошибка 403.")
     def test_admin_patch_method(self, api_manager, admin_user_with_creds, creation_user_data: TestUser):
@@ -251,6 +264,7 @@ class TestAuthAPI:
         with allure.step("Пытаемся обновить данные пользователя как админ (должно быть запрещено)"):
             admin_user_with_creds.api.user_api.patch_user(patch_data.model_dump(), user_id, expected_status=403)
 
+    @pytest.mark.api
     @allure.story("Update User Data by ID")
     @allure.description("Тест проверяет, что обычный пользователь НЕ может обновить чужие данные. Ожидается ошибка 403.")
     def test_user_patch_method(self, api_manager, common_user):
@@ -272,6 +286,7 @@ class TestAuthAPI:
         with allure.step("Пытаемся обновить свои данные как обычный пользователь (должно быть запрещено)"):
             common_user.api.user_api.patch_user(patch_data, user_id=user_id, expected_status=403)
 
+    @pytest.mark.api
     @allure.story("Create User")
     @allure.description("Тест проверяет, что суперадмин может создать нового пользователя. Проверяются все поля ответа.")
     def test_super_admin_create_user(self, api_manager, super_admin, creation_user_data: TestUser):
@@ -293,6 +308,7 @@ class TestAuthAPI:
         with allure.step("Проверяем статус верификации"):
             assert response_data.verified is True
 
+    @pytest.mark.api
     @allure.story("Create User")
     @allure.description("Тест проверяет, что администратор может создать нового пользователя. Проверяются все поля ответа.")
     def test_admin_create_user(self, api_manager, admin_user_with_creds, creation_user_data: TestUser):
@@ -314,6 +330,7 @@ class TestAuthAPI:
         with allure.step("Проверяем статус верификации"):
             assert response_data.verified is True
 
+    @pytest.mark.api
     @allure.story("Create User")
     @allure.description("Тест проверяет, что обычный пользователь НЕ может создать нового пользователя. Ожидается ошибка 403.")
     def test_user_create_user(self, api_manager, common_user, creation_user_data: TestUser):
