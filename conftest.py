@@ -7,7 +7,8 @@ from constants import BASE_URL
 import pytest
 from sqlalchemy.orm import Session
 from db_requester.db_client import get_db_session
-from models.base_models import TestUser, RegisterUserResponse
+from enums.locations_for_movies import Locations
+from models.base_models import TestUser, RegisterUserResponse, RequestMovie, ResponseMovie, RequestGetMovie
 from utils.data_generator import DataGenerator
 from faker import Faker
 from custom_requester.custom_requester import CustomRequester
@@ -68,32 +69,30 @@ def requester():
     session = requests.Session()
     return CustomRequester(session=session, base_url=BASE_URL)
 
-@pytest.fixture(scope="session")
-def data_get_movies(session):
-    return {
-        "pageSize": 10,
-        "page": 1,
-        "minPrice": 1,
-        "maxPrice": 1000,
-        "locations": "SPB",
-        "published": True,
-        "genreId": 1,
-        "createdAt": "asc"
-    }
+@pytest.fixture(scope="function")
+def data_get_movies(session) -> RequestGetMovie:
+    return RequestGetMovie(
+        pageSize=random.randint(1, 10),
+        page=random.randint(1, 50),
+        minPrice=random.randint(1, 300),
+        maxPrice=random.randint(500, 10000),
+        location=[Locations.MSK],
+        published=True,
+        genreId=1,
+        createdAt="asc"
+    )
 
 @pytest.fixture(scope="function")
-def create_movie_data():
-    location_list = ["MSK", "SPB"]
-    random_location = random.choice(location_list)
-    return {
-        "name": DataGenerator.generate_random_password(),
-        "imageUrl": "https://randomurl.url",
-        "price": random.randint(1,10000),
-        "description": DataGenerator.generate_random_password(),
-        "location": random_location,
-        "published": True,
-        "genreId": 1
-    }
+def create_movie_data() -> RequestMovie:
+    return RequestMovie(
+        name=DataGenerator.generate_name_movie(),
+        imageUrl="https://randomstring.url",
+        price=DataGenerator.generate_random_price(),
+        description=DataGenerator.generate_description_movie(),
+        location=DataGenerator.generate_random_locate(),
+        published=True,
+        genreId=1
+    )
 
 @pytest.fixture
 def user_session():

@@ -1,10 +1,11 @@
 from pydantic import BaseModel, Field, field_validator
 from enums.roles import Roles
+from enums.locations_for_movies import Locations
 from typing import Optional, List
 import datetime
 import re
 
-def validate_email(cls, value: str) -> str:
+def validate_email(value: str) -> str:
     if "@" not in value:
         raise ValueError("Email должен содержать знак '@'")
     return value
@@ -27,12 +28,13 @@ class TestUser(BaseModel):
 
     @field_validator("email")
     def check_email(cls, value: str) -> str:
-        return validate_email(cls, value)
+        return validate_email(value)
 
 # Добавляем кастомный JSON-сериализатор для Enum
     class Config:
         json_encoders = {
-            Roles: lambda v: v.value  # Преобразуем Enum в строку
+            Roles: lambda v: v.value,
+            Locations: lambda v: v.value# Преобразуем Enum в строку
         }
 
 class RegisterUserResponse(BaseModel):
@@ -82,7 +84,7 @@ class RequestCreateUserBySuperAdmin(BaseModel):
 
     @field_validator("email")
     def check_email(cls, value: str) -> str:
-        return validate_email(cls, value)
+        return validate_email(value)
 
 class RequestPatchUser(BaseModel):
     roles: list[Roles]
@@ -100,3 +102,35 @@ class ResponseListUsers(BaseModel):
     count: int
     page: int
     pageSize: int
+
+class RequestGetMovie(BaseModel):
+    pageSize: int
+    page: int
+    minPrice: int
+    maxPrice: int
+    location: list[Locations]
+    published: bool
+    genreId: int
+    createdAt: str
+
+class RequestMovie(BaseModel):
+    name: str = Field(...,description="Название фильма")
+    imageUrl: str
+    price: float = Field(...,description="Стоимость")
+    description: str
+    location: str
+    published: bool
+    genreId: int
+
+class ResponseMovie(BaseModel):
+    id: int = Field(...,description="ID фильма")
+    name: str = Field(...,description="Название фильма")
+    price: float = Field(...,description="Стоимость")
+    description: str
+    imageUrl: str
+    location: str
+    published: bool
+    genreId: int
+    genre: dict
+    createdAt: str
+    rating: float

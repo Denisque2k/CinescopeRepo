@@ -63,3 +63,31 @@ class DataGenerator:
             'banned': False,
             'roles': '{USER}'
         }
+
+
+    @staticmethod
+    def generate_name_movie():
+        movie_name = DataGenerator.generate_random_password()
+        return movie_name
+
+    @staticmethod
+    def generate_description_movie():
+        description = DataGenerator.generate_random_password()
+        return description
+
+    @staticmethod
+    def generate_random_price():
+        price = random.randint(1, 10000)
+        return price
+
+    @staticmethod
+    def generate_random_int_():
+        random_num = random.randint(1, 10)
+        return random_num
+
+
+    @staticmethod
+    def generate_random_locate():
+        location_list = ["MSK", "SPB"]
+        location = random.choice(location_list)
+        return location

@@ -1,6 +1,7 @@
 import pytest
-
+import allure
 from conftest import super_admin
+from models.base_models import ResponseMovie, RequestMovie, RequestGetMovie
 
 
 
@@ -40,35 +41,35 @@ class TestMovieAPI:
 
 
 
-    def test_create_movie(self, super_admin, create_movie_data):
-        data = create_movie_data
-        assert data["name"] in data.values(), "Поле name пустое"
-        assert data["description"] in data.values(), "Поле 'description' пустое"
-        assert data["price"] in data.values(), "Поле 'price' пустое"
-        assert data["imageUrl"] in data.values(), "Поле 'imageUrl' пустое"
-        assert data["published"] in data.values(), "Поле 'published' пустое"
-        assert data["genreId"] in data.values(), "Поле 'genreId' пустое"
-        data_ints_values = (data["price"], data["genreId"])
-        all_int = all(isinstance(value, int) for value in data_ints_values)
-        assert all_int, "Значения в полях 'price', 'genreId' должны быть целыми числами"
-        assert data["location"] in ["MSK", "SPB"], f"Ожидалось значение 'MSK' или 'SPB', получено '{data["location"]}'"
-        assert 0 < data["price"], "Некорректная сумма, ожидалось значение больше нуля"
-        response = super_admin.api.movie_api.create_movie(data)
-        response_data = response.json()
-        common_keys = data.keys() & response_data.keys()
-        assert all(data[k] == response_data[k] for k in common_keys)
+    def test_create_movie(self, api_manager, super_admin, create_movie_data: RequestMovie):
+        data = RequestMovie(
+            name=create_movie_data.name,
+            description=create_movie_data.description,
+            price=create_movie_data.price,
+            imageUrl=create_movie_data.imageUrl,
+            location=create_movie_data.location,
+            published=create_movie_data.published,
+            genreId=create_movie_data.genreId,
+        )
+        assert data.name, "Поле name пустое"
+        assert data.description, "Поле 'description' пустое"
+        assert data.price, "Поле 'price' пустое"
+        assert data.imageUrl, "Поле 'imageUrl' пустое"
+        assert data.published, "Поле 'published' пустое"
+        assert data.genreId, "Поле 'genreId' пустое"
+        assert 0 < data.price, "Некорректная сумма, ожидалось значение больше нуля"
+        response = super_admin.api.movie_api.create_movie(create_movie_data.model_dump())
+        response_data = ResponseMovie(**response.json())
+        assert api_manager.movie_api.get_movie(movie_id=response_data.id), "Фильм не найден"
+        assert response_data.name == data.name, f"Название фильма не совпадает, ожидалось {data.name}"
+        assert response_data.price == data.price, f"Цена фильма не совпадает, ожидалось {data.price}"
+
 
     def test_get_movie(self, api_manager, super_admin, create_movie_data):
-       response = super_admin.api.movie_api.create_movie(create_movie_data).json()
-       movie_id = response["id"]
-       api_manager.movie_api.get_movie(movie_id=movie_id)
+       response = super_admin.api.movie_api.create_movie(create_movie_data.model_dump())
+       response_data = ResponseMovie(**response.json())
+       api_manager.movie_api.get_movie(movie_id=response_data.id)
 
-    def test_super_admin_delete_movie(self, api_manager, super_admin, create_movie_data):
-        response = super_admin.api.movie_api.create_movie(data=create_movie_data).json()
-        movie_id = response["id"]
-        assert movie_id, "Проверьте поле ИД фильма"
-        assert isinstance(movie_id, int), "Укажите корректное значение ИД фильма"
-        super_admin.api.movie_api.delete_movie(movie_id=movie_id)
 
     users_fixtures = [
         pytest.param("admin_user_with_creds", 403, "Получает запрет", id="admin_user_with_creds"),
@@ -78,71 +79,71 @@ class TestMovieAPI:
     def test_delete_movie(self, request, fixture_name, expected_status, description, api_manager, super_admin, admin_user_with_creds, common_user, create_movie_data):
         name_fixture = request.getfixturevalue(fixture_name)
 
-        create_movie_response = super_admin.api.movie_api.create_movie(data=create_movie_data)
-        movie_id = create_movie_response.json()["id"]
+        create_movie_response = super_admin.api.movie_api.create_movie(data=create_movie_data.model_dump())
+        create_movie_response_data = ResponseMovie(**create_movie_response.json())
+        movie_id = create_movie_response_data.id
 
         delete_response = name_fixture.api.movie_api.delete_movie(movie_id=movie_id, expected_status=expected_status)
         assert delete_response.status_code == expected_status, f"{description}"
         if expected_status == 200:
             assert name_fixture.api.movie_api.get_movie(movie_id=movie_id, expected_status=404).status_code == 404
+
     @pytest.mark.slow
     def test_super_admin_delete_movie(self, api_manager, super_admin, create_movie_data):
-        response = super_admin.api.movie_api.create_movie(data=create_movie_data).json()
-        movie_id = response["id"]
+        response = super_admin.api.movie_api.create_movie(data=create_movie_data.model_dump())
+        response_data = ResponseMovie(**response.json())
+        movie_id = response_data.id
         assert movie_id, "Проверьте поле ИД фильма"
-        assert isinstance(movie_id, int), "Укажите корректное значение ИД фильма"
         super_admin.api.movie_api.delete_movie(movie_id=movie_id)
-        assert super_admin.api.movie_api.get_movie(movie_id=movie_id, expected_status=404).status_code == 404
+        api_manager.movie_api.get_movie(movie_id=movie_id, expected_status=404)
 
     def test_super_admin_patch_movie(self, api_manager, super_admin, create_movie_data):
-        data = {
-            "name": create_movie_data["name"],
-            "description": "Here movie description",
-            "price": 350,
-            "location": "MSK",
-            "imageUrl": "https://image888.url",
-            "published": True,
-            "genreId": 1
-        }
-        assert data["name"] in data.values(), "Поле name пустое"
-        assert data["description"] in data.values(), "Поле 'description' пустое"
-        assert data["price"] in data.values(), "Поле 'price' пустое"
-        assert data["imageUrl"] in data.values(), "Поле 'imageUrl' пустое"
-        assert data["published"] in data.values(), "Поле 'published' пустое"
-        assert data["genreId"] in data.values(), "Поле 'genreId' пустое"
-        data_ints_values = (data["price"], data["genreId"])
-        all_int = all(isinstance(value, int) for value in data_ints_values)
-        assert all_int, "Значения в полях 'price', 'genreId' должны быть целыми числами"
-        assert data["location"] in ["MSK", "SPB"], f"Ожидалось значение 'MSK' или 'SPB', получено '{data["location"]}'"
-        assert 0 < data["price"], "Некорректная сумма, ожидалось значение больше нуля"
-        response = super_admin.api.movie_api.create_movie(create_movie_data).json()
-        movie_id = response["id"]
+        data = RequestMovie(
+            name=create_movie_data.name,
+            imageUrl=create_movie_data.imageUrl,
+            price=create_movie_data.price,
+            description=create_movie_data.description,
+            location=create_movie_data.location,
+            published=create_movie_data.published,
+            genreId=create_movie_data.genreId
+        )
+        assert data.name, "Поле name пустое"
+        assert data.description, "Поле 'description' пустое"
+        assert data.price, "Поле 'price' пустое"
+        assert data.imageUrl, "Поле 'imageUrl' пустое"
+        assert data.published, "Поле 'published' пустое"
+        assert data.genreId, "Поле 'genreId' пустое"
+        assert data.location in ["MSK", "SPB"], f"Ожидалось значение 'MSK' или 'SPB', получено '{data["location"]}'"
+        assert 0 < data.price, "Некорректная сумма, ожидалось значение больше нуля"
+        response = super_admin.api.movie_api.create_movie(create_movie_data.model_dump())
+        response_data = ResponseMovie(**response.json())
+        movie_id = response_data.id
         super_admin.api.movie_api.patch_movie(movie_id=movie_id, data=data)
+        assert response_data.name == data.name, f"Название фильма не совпадает, ожидалось {data.name}"
+        assert response_data.price == data.price, f"Цена фильма не совпадает, ожидалось {data.price}"
 
     @pytest.mark.slow
     def test_patch_movie(self, api_manager, super_admin, create_movie_data, common_user):
-        data = {
-            "name": "Here movie name",
-            "description": "Here movie description",
-            "price": 350,
-            "location": "MSK",
-            "imageUrl": "https://image888.url",
-            "published": True,
-            "genreId": 1
-        }
-        assert data["name"] in data.values(), "Поле name пустое"
-        assert data["description"] in data.values(), "Поле 'description' пустое"
-        assert data["price"] in data.values(), "Поле 'price' пустое"
-        assert data["imageUrl"] in data.values(), "Поле 'imageUrl' пустое"
-        assert data["published"] in data.values(), "Поле 'published' пустое"
-        assert data["genreId"] in data.values(), "Поле 'genreId' пустое"
-        data_ints_values = (data["price"], data["genreId"])
-        all_int = all(isinstance(value, int) for value in data_ints_values)
-        assert all_int, "Значения в полях 'price', 'genreId' должны быть целыми числами"
-        assert data["location"] in ["MSK", "SPB"], f"Ожидалось значение 'MSK' или 'SPB', получено '{data["location"]}'"
-        assert 0 < data["price"], "Некорректная сумма, ожидалось значение больше нуля"
-        response = super_admin.api.movie_api.create_movie(create_movie_data).json()
-        movie_id = response["id"]
+        data = RequestMovie(
+            name=create_movie_data.name,
+            imageUrl=create_movie_data.imageUrl,
+            price=create_movie_data.price,
+            description=create_movie_data.description,
+            location=create_movie_data.location,
+            published=create_movie_data.published,
+            genreId=create_movie_data.genreId
+        )
+        assert data.name, "Поле name пустое"
+        assert data.description, "Поле 'description' пустое"
+        assert data.price, "Поле 'price' пустое"
+        assert data.imageUrl, "Поле 'imageUrl' пустое"
+        assert data.published, "Поле 'published' пустое"
+        assert data.genreId, "Поле 'genreId' пустое"
+        assert data.location in ["MSK", "SPB"], f"Ожидалось значение 'MSK' или 'SPB', получено '{data["location"]}'"
+        assert 0 < data.price, "Некорректная сумма, ожидалось значение больше нуля"
+        response = super_admin.api.movie_api.create_movie(create_movie_data.model_dump())
+        response_data = ResponseMovie(**response.json())
+        movie_id = response_data.id
         common_user.api.movie_api.patch_movie(movie_id=movie_id, data=data, expected_status=403)
 
 
