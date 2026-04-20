@@ -82,7 +82,7 @@ class DataGenerator:
 
     @staticmethod
     def generate_random_int_():
-        random_num = random.randint(1, 10)
+        random_num = faker.random_int(1, 9999)
         return random_num
 
 
