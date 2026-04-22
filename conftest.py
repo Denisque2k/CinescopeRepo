@@ -17,6 +17,8 @@ from enums.roles import Roles
 from db_requester.db_helpers import DBHelper
 from uuid import uuid4
 
+from utils.tools import Tools
+
 faker = Faker()
 
 @pytest.fixture(scope="function")
@@ -240,7 +242,10 @@ def context(browser):
     context = browser.new_context()
     context.tracing.start(screenshots=True, snapshots=True, sources=True)  # Трассировка для отладки
     context.set_default_timeout(DEFAULT_UI_TIMEOUT)  # Установка таймаута по умолчанию
-    yield context  # yield возвращает значение фикстуры, выполнение теста продолжится после yield
+    yield context # yield возвращает значение фикстуры, выполнение теста продолжится после yield
+    log_name = f"trace_{Tools.get_timestamp()}.zip"
+    trace_path = Tools.files_dir('playwright_trace', log_name)
+    context.tracing.stop(path=trace_path)
     context.close()  # Контекст закрывается после завершения теста
 
 
