@@ -91,3 +91,9 @@ class DataGenerator:
         location_list = ["MSK", "SPB"]
         location = random.choice(location_list)
         return location
+
+    @staticmethod
+    def generate_random_num_for_one_to_five():
+        random_num = faker.random_int(1, 5)
+        number = str(random_num)
+        return number

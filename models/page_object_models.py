@@ -27,12 +27,12 @@ class PageAction:
         return self.page.locator(locator).text_content()
 
     @allure.step("Ожидание появления или исчензновения элемента {locator}, state={state}")
-    def wait_for_element(self, locator: str, state: str = "visible"):
+    def wait_for_element(self, locator: str):
         self.page.locator(locator).wait_for(state="visible")
 
     @allure.step("Скриншот текущей страницы")
     def make_screenshot_and_attach_to_allure(self):
-        screenshot_path = "screenshot.png"
+        screenshot_path = "tests/ui/screenshots/screenshot.png"
         self.page.screenshot(path=screenshot_path, full_page=True)
 
         # Прикрепление скриншота к Allure-отчету
@@ -53,6 +53,10 @@ class PageAction:
             notification_locator.wait_for(state="hidden")
             assert notification_locator.is_visible() == False, "Уведомление не исчезло"
 
+    @allure.step("Выбор значения в выпадающем списке")
+    def choose_option(self, locator, value):
+        self.page.get_by_role(locator, name=value).click()
+
 class BasePage(PageAction): #Базовая логика доспустимая для всех страниц на сайте
     def __init__(self, page: Page):
         super().__init__(page)
@@ -71,6 +75,8 @@ class BasePage(PageAction): #Базовая логика доспустимая 
     def go_to_all_movies(self):
         self.click_element(self.all_movies_button)
         self.wait_redirect_for_url(f"{self.home_url}movies")
+
+
 
 class CinescopeRegisterPage(BasePage):
     def __init__(self, page: Page):
@@ -135,3 +141,23 @@ class CinescopeLoginPage(BasePage):
 
     def assert_alert_was_pop_up(self):
         self.check_pop_up_element_with_text("Вы вошли в аккаунт")
+
+class TestAddReview(CinescopeLoginPage):
+    def __init__(self, page: Page):
+        super().__init__(page)
+        self.explicit = "a[href='/movies/2451']"
+
+    def go_to_movie_page(self):
+        self.click_element(self.explicit)
+        self.wait_redirect_for_url(f"{self.home_url}movies/2451")
+
+    def write_text_review(self, text):
+        self.enter_text_to_element("[placeholder='Написать отзыв']", text=text)
+
+    def choose_rating(self, value: str):
+        self.click_element("[role='combobox']")
+        self.choose_option("option", value=value)
+        self.click_element("xpath=/html/body/div[2]/main/div/div/div/form/div/button")
+
+    def assert_alert_was_pop_up(self):
+        self.check_pop_up_element_with_text("Отзыв успешно создан")
