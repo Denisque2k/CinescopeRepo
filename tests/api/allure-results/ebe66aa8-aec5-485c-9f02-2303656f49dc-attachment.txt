@@ -1,0 +1,38 @@
+2026-04-15 01:01:56 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:56 [32mINFO[0m [32mpytest tests/api/test_movies.py::TestMovieAPI::test_get_movies[1-1000-locations0-1-200][0m
+curl -X GET 'https://api.dev-cinescope.coconutqa.ru/movies?pageSize=1&page=1&minPrice=1&maxPrice=1000&locations=SPB&published=True&genreId=1&createdAt=asc' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+
+2026-04-15 01:01:56 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:56 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "movies": [
+        {
+            "id": 895,
+            "name": "Распределённый и максимальный доступ",
+            "description": "Запустить секунда космос ярко ярко. Вообще ботинок легко тяжелый плясать посидеть. Аж привлекать магазин ломать. Слать угол столетие поговорить головка призыв устройство.",
+            "genreId": 1,
+            "imageUrl": "http://www.npo.com/",
+            "price": 222,
+            "rating": 0,
+            "location": "SPB",
+            "published": true,
+            "createdAt": "2025-05-23T12:21:37.272Z",
+            "genre": {
+                "name": "Драма"
+            }
+        }
+    ],
+    "count": 2090,
+    "page": 1,
+    "pageSize": 1,
+    "pageCount": 2090
+}
+2026-04-15 01:01:56 [32mINFO[0m ================================================================================

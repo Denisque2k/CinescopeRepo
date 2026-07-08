@@ -1,0 +1,117 @@
+2026-04-15 01:01:49 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:49 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_user_patch_method (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}' 
+
+2026-04-15 01:01:49 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:49 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "734964ec-4d6a-4789-839f-75797141e73e",
+        "email": "api1@gmail.com",
+        "fullName": "Жмышенко Валерий Альбертович",
+        "roles": [
+            "USER",
+            "ADMIN",
+            "SUPER_ADMIN"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTEwLCJleHAiOjE3NzYyMDU5MTB9.YkoCDAz5UVdqeYLBrwA1UcHgAWMZPWApO1DedQW01rs",
+    "refreshToken": "8d05a1cf-3c2a-4b5f-acec-9a1c78343afe",
+    "expiresIn": 1776205910052
+}
+2026-04-15 01:01:49 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:50 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:50 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_user_patch_method (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/user' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTEwLCJleHAiOjE3NzYyMDU5MTB9.YkoCDAz5UVdqeYLBrwA1UcHgAWMZPWApO1DedQW01rs' \
+-H 'Cookie: refresh_token=8d05a1cf-3c2a-4b5f-acec-9a1c78343afe' \
+-H 'Content-Length: 184' \
+-d '{"email": "kekiaerkicd@gmail.com", "fullName": "Neil Patel", "password": "26PB|N1$ri", "passwordRepeat": "26PB|N1$ri", "roles": ["USER"], "verified": true, "banned": false, "id": null}' 
+
+2026-04-15 01:01:50 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:50 [32mINFO[0m 	STATUS_CODE: [32m201[0m
+	DATA:
+{
+    "id": "3c55a567-1040-4585-be65-e39e5e00e42c",
+    "email": "kekiaerkicd@gmail.com",
+    "fullName": "Neil Patel",
+    "verified": true,
+    "banned": false,
+    "roles": [
+        "USER"
+    ],
+    "createdAt": "2026-04-14T22:01:50.316Z"
+}
+2026-04-15 01:01:50 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:50 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:50 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_user_patch_method (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 60' \
+-d '{"email": "kekiaerkicd@gmail.com", "password": "26PB|N1$ri"}' 
+
+2026-04-15 01:01:50 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:50 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "3c55a567-1040-4585-be65-e39e5e00e42c",
+        "email": "kekiaerkicd@gmail.com",
+        "fullName": "Neil Patel",
+        "roles": [
+            "USER"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjNTVhNTY3LTEwNDAtNDU4NS1iZTY1LWUzOWU1ZTAwZTQyYyIsImVtYWlsIjoia2VraWFlcmtpY2RAZ21haWwuY29tIiwicm9sZXMiOlsiVVNFUiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTEwLCJleHAiOjE3NzYyMDU5MTB9.19vO8b67TR-ZlBQV2MIe_QTB7d6qt5wAPJAjsE4A6QI",
+    "refreshToken": "1bd8db83-e9c3-4345-990c-9a0fc4f1eece",
+    "expiresIn": 1776205910647
+}
+2026-04-15 01:01:50 [32mINFO[0m ================================================================================
+2026-04-15 01:01:50 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:50 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_user_patch_method[0m
+curl -X PATCH 'https://auth.dev-cinescope.coconutqa.ru/user/3c55a567-1040-4585-be65-e39e5e00e42c' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjNTVhNTY3LTEwNDAtNDU4NS1iZTY1LWUzOWU1ZTAwZTQyYyIsImVtYWlsIjoia2VraWFlcmtpY2RAZ21haWwuY29tIiwicm9sZXMiOlsiVVNFUiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTEwLCJleHAiOjE3NzYyMDU5MTB9.19vO8b67TR-ZlBQV2MIe_QTB7d6qt5wAPJAjsE4A6QI' \
+-H 'Cookie: refresh_token=1bd8db83-e9c3-4345-990c-9a0fc4f1eece' \
+-H 'Content-Length: 55' \
+-d '{"roles": ["ADMIN"], "verified": true, "banned": false}' 
+
+2026-04-15 01:01:50 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:50 [32mINFO[0m 	STATUS_CODE: [31m403[0m
+	DATA: [31m{
+    "message": "Forbidden resource",
+    "error": "Forbidden",
+    "statusCode": 403
+}[0m
+2026-04-15 01:01:50 [32mINFO[0m ================================================================================

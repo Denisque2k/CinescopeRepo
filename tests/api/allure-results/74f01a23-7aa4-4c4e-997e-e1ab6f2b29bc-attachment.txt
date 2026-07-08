@@ -1,0 +1,111 @@
+2026-04-15 01:01:53 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:53 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_get_super_admin_users_list (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}' 
+
+2026-04-15 01:01:53 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:53 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "734964ec-4d6a-4789-839f-75797141e73e",
+        "email": "api1@gmail.com",
+        "fullName": "Жмышенко Валерий Альбертович",
+        "roles": [
+            "USER",
+            "ADMIN",
+            "SUPER_ADMIN"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTEzLCJleHAiOjE3NzYyMDU5MTN9.xAjOxiwOYDeXDjjzcUk5UHQ3nUh7uhU-h1FgRkT733o",
+    "refreshToken": "43dde993-ffe0-4d11-8f88-1945a6467f31",
+    "expiresIn": 1776205913336
+}
+2026-04-15 01:01:53 [32mINFO[0m ================================================================================
+2026-04-15 01:01:53 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:53 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_get_super_admin_users_list[0m
+curl -X GET 'https://auth.dev-cinescope.coconutqa.ru/user?roles=ADMIN&pageSize=4&page=2&createAt=asc' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTEzLCJleHAiOjE3NzYyMDU5MTN9.xAjOxiwOYDeXDjjzcUk5UHQ3nUh7uhU-h1FgRkT733o' \
+-H 'Cookie: refresh_token=43dde993-ffe0-4d11-8f88-1945a6467f31' \
+
+2026-04-15 01:01:53 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:53 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "users": [
+        {
+            "id": "6750ef2d-bea6-4454-822c-f5ccb64ae05f",
+            "email": "kek3zwo82s5@gmail.com",
+            "fullName": "Nicole Cole",
+            "password": "$2b$10$0f8QegqyrUdslvsfT2Wr4.205CijRjO.GNeWZ7pxrWnbuZvXN73xW",
+            "createdAt": "2026-04-14T21:20:45.115Z",
+            "updatedAt": "2026-04-14T21:20:45.134Z",
+            "verified": true,
+            "banned": false,
+            "roles": [
+                "ADMIN"
+            ]
+        },
+        {
+            "id": "10762486-9627-4a46-8e9d-ce1d79934fac",
+            "email": "kekbsmnehsf@gmail.com",
+            "fullName": "Joseph Werner",
+            "password": "$2b$10$edq99ZKicOz2JWXj9rlCTeAXMYfrx9x97NxBHDP/6Eakc4TIV8Aju",
+            "createdAt": "2026-04-14T21:10:15.828Z",
+            "updatedAt": "2026-04-14T21:10:15.892Z",
+            "verified": true,
+            "banned": false,
+            "roles": [
+                "ADMIN"
+            ]
+        },
+        {
+            "id": "ed046e00-5f7c-48cb-af68-292bd4d57090",
+            "email": "kek8jx3vo@gmail.com",
+            "fullName": "Chris Smith",
+            "password": "$2b$10$dDZSEgvpzGr.9pn7wu00WOxAE.Z7mU91ihkjyMwXGbLXJu.IMpWhi",
+            "createdAt": "2026-04-14T19:44:21.820Z",
+            "updatedAt": "2026-04-14T20:37:38.732Z",
+            "verified": true,
+            "banned": false,
+            "roles": [
+                "USER",
+                "ADMIN",
+                "SUPER_ADMIN"
+            ]
+        },
+        {
+            "id": "c3b5c366-8d6c-4ed1-a45c-20f4408b7081",
+            "email": "kek4rhmd60r@gmail.com",
+            "fullName": "Wesley Pierce",
+            "password": "$2b$10$1lSQvW/EMp7y0uF.0xRkvOWV.XBv73i7zqE9Ik72RQlPf/ES0aJZi",
+            "createdAt": "2026-04-14T17:23:36.824Z",
+            "updatedAt": "2026-04-14T17:23:36.875Z",
+            "verified": true,
+            "banned": false,
+            "roles": [
+                "ADMIN"
+            ]
+        }
+    ],
+    "count": 719,
+    "page": 2,
+    "pageSize": 4,
+    "pageCount": 180
+}
+2026-04-15 01:01:53 [32mINFO[0m ================================================================================

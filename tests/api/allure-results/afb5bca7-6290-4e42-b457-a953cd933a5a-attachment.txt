@@ -1,0 +1,82 @@
+2026-04-15 01:01:42 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:42 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_get_refresh_tokens (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/register' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Cookie: refresh_token=cecfb053-b66f-482e-ae7a-457045cc93c9' \
+-H 'Content-Length: 184' \
+-d '{"email": "kekvolqp15w@gmail.com", "fullName": "Eric Thomas", "password": "$TXz2NsojP", "passwordRepeat": "$TXz2NsojP", "roles": ["USER"], "verified": null, "banned": null, "id": null}' 
+
+2026-04-15 01:01:42 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:42 [32mINFO[0m 	STATUS_CODE: [32m201[0m
+	DATA:
+{
+    "id": "3ed3af12-c1ad-4ec1-b5e4-47a1d5d35b96",
+    "email": "kekvolqp15w@gmail.com",
+    "fullName": "Eric Thomas",
+    "verified": true,
+    "banned": false,
+    "roles": [
+        "USER"
+    ],
+    "createdAt": "2026-04-14T22:01:42.725Z"
+}
+2026-04-15 01:01:42 [32mINFO[0m ================================================================================
+2026-04-15 01:01:43 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:43 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_get_refresh_tokens[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Cookie: refresh_token=cecfb053-b66f-482e-ae7a-457045cc93c9' \
+-H 'Content-Length: 60' \
+-d '{"email": "kekvolqp15w@gmail.com", "password": "$TXz2NsojP"}' 
+
+2026-04-15 01:01:43 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:43 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "3ed3af12-c1ad-4ec1-b5e4-47a1d5d35b96",
+        "email": "kekvolqp15w@gmail.com",
+        "fullName": "Eric Thomas",
+        "roles": [
+            "USER"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZDNhZjEyLWMxYWQtNGVjMS1iNWU0LTQ3YTFkNWQzNWI5NiIsImVtYWlsIjoia2Vrdm9scXAxNXdAZ21haWwuY29tIiwicm9sZXMiOlsiVVNFUiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTAzLCJleHAiOjE3NzYyMDU5MDN9.in9wvA-sKpIRqurG08b1Qz70z-wIQsw3zE25liY4-Yw",
+    "refreshToken": "e369f8ae-c759-4c32-8c01-472ae1987664",
+    "expiresIn": 1776205903128
+}
+2026-04-15 01:01:43 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:43 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:43 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_get_refresh_tokens[0m
+curl -X GET 'https://auth.dev-cinescope.coconutqa.ru/refresh-tokens' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Cookie: refresh_token=e369f8ae-c759-4c32-8c01-472ae1987664' \
+
+2026-04-15 01:01:43 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:43 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZDNhZjEyLWMxYWQtNGVjMS1iNWU0LTQ3YTFkNWQzNWI5NiIsImVtYWlsIjoia2Vrdm9scXAxNXdAZ21haWwuY29tIiwicm9sZXMiOlsiVVNFUiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTAzLCJleHAiOjE3NzYyMDU5MDN9.in9wvA-sKpIRqurG08b1Qz70z-wIQsw3zE25liY4-Yw",
+    "refreshToken": "0dc79aca-578d-4688-a607-0e1368732d7c",
+    "expiresIn": 1776205903244
+}
+2026-04-15 01:01:43 [32mINFO[0m ================================================================================

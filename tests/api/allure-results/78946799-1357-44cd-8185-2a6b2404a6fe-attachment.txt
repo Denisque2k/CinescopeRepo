@@ -1,0 +1,180 @@
+2026-04-15 01:01:58 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:58 [32mINFO[0m [32mpytest tests/api/test_movies.py::TestMovieAPI::test_delete_movie[admin_user_with_creds] (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}' 
+
+2026-04-15 01:01:58 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:58 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "734964ec-4d6a-4789-839f-75797141e73e",
+        "email": "api1@gmail.com",
+        "fullName": "Жмышенко Валерий Альбертович",
+        "roles": [
+            "USER",
+            "ADMIN",
+            "SUPER_ADMIN"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTE4LCJleHAiOjE3NzYyMDU5MTh9._LJgOMg-NBY_jppqGdcuCoDSQUrE8N8NoSZ1gcQHCjM",
+    "refreshToken": "3072332a-7ac8-4c92-82f4-ac8c8d64adb1",
+    "expiresIn": 1776205918320
+}
+2026-04-15 01:01:58 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:58 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:58 [32mINFO[0m [32mpytest tests/api/test_movies.py::TestMovieAPI::test_delete_movie[admin_user_with_creds] (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 66' \
+-d '{"email": "kekybr3sw67@gmail.com", "password": "Oj8HjnHF#we7xS|F"}' 
+
+2026-04-15 01:01:58 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:58 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "e8dabac0-39ef-4d53-9f7c-44a5fb21930b",
+        "email": "kekybr3sw67@gmail.com",
+        "fullName": "Ryan Larson",
+        "roles": [
+            "ADMIN"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU4ZGFiYWMwLTM5ZWYtNGQ1My05ZjdjLTQ0YTVmYjIxOTMwYiIsImVtYWlsIjoia2VreWJyM3N3NjdAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU4iXSwidmVyaWZpZWQiOnRydWUsImlhdCI6MTc3NjIwNDExOCwiZXhwIjoxNzc2MjA1OTE4fQ.fkpDOY6QDIRyHkLaoHco2ZcP-bsATizghQ-4970-EJw",
+    "refreshToken": "3cddbb56-441e-4626-bf27-4af9ec3375e8",
+    "expiresIn": 1776205918627
+}
+2026-04-15 01:01:58 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:58 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:58 [32mINFO[0m [32mpytest tests/api/test_movies.py::TestMovieAPI::test_delete_movie[admin_user_with_creds] (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/user' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTE4LCJleHAiOjE3NzYyMDU5MTh9._LJgOMg-NBY_jppqGdcuCoDSQUrE8N8NoSZ1gcQHCjM' \
+-H 'Cookie: refresh_token=3072332a-7ac8-4c92-82f4-ac8c8d64adb1' \
+-H 'Content-Length: 201' \
+-d '{"email": "kekgd5j1l2e@gmail.com", "fullName": "Patrick Edwards", "password": "jNsz&&N5ye5Ka6%^", "passwordRepeat": "jNsz&&N5ye5Ka6%^", "roles": ["USER"], "verified": true, "banned": false, "id": null}' 
+
+2026-04-15 01:01:58 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:58 [32mINFO[0m 	STATUS_CODE: [32m201[0m
+	DATA:
+{
+    "id": "a2867a4a-f6e5-4e30-97e1-42580cc114f1",
+    "email": "kekgd5j1l2e@gmail.com",
+    "fullName": "Patrick Edwards",
+    "verified": true,
+    "banned": false,
+    "roles": [
+        "USER"
+    ],
+    "createdAt": "2026-04-14T22:01:58.825Z"
+}
+2026-04-15 01:01:58 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:59 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:59 [32mINFO[0m [32mpytest tests/api/test_movies.py::TestMovieAPI::test_delete_movie[admin_user_with_creds] (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 66' \
+-d '{"email": "kekgd5j1l2e@gmail.com", "password": "jNsz&&N5ye5Ka6%^"}' 
+
+2026-04-15 01:01:59 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:59 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "a2867a4a-f6e5-4e30-97e1-42580cc114f1",
+        "email": "kekgd5j1l2e@gmail.com",
+        "fullName": "Patrick Edwards",
+        "roles": [
+            "USER"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEyODY3YTRhLWY2ZTUtNGUzMC05N2UxLTQyNTgwY2MxMTRmMSIsImVtYWlsIjoia2VrZ2Q1ajFsMmVAZ21haWwuY29tIiwicm9sZXMiOlsiVVNFUiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTE5LCJleHAiOjE3NzYyMDU5MTl9.sPYnEwUwSwkI_d15RHfOnxEU7M_5ty9cLYQO1fB3t50",
+    "refreshToken": "5aa2a65e-614f-4af7-8644-e7adccd3e199",
+    "expiresIn": 1776205919145
+}
+2026-04-15 01:01:59 [32mINFO[0m ================================================================================
+2026-04-15 01:01:59 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:59 [32mINFO[0m [32mpytest tests/api/test_movies.py::TestMovieAPI::test_delete_movie[admin_user_with_creds][0m
+curl -X POST 'https://api.dev-cinescope.coconutqa.ru/movies' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTE4LCJleHAiOjE3NzYyMDU5MTh9._LJgOMg-NBY_jppqGdcuCoDSQUrE8N8NoSZ1gcQHCjM' \
+-H 'Content-Length: 168' \
+-d '{"name": "pAMMiBGXTy0RpVDsr7Fx", "imageUrl": "https://randomstring.url", "price": 4532.0, "description": "09OH3m|4", "location": "SPB", "published": true, "genreId": 1}' 
+
+2026-04-15 01:01:59 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:59 [32mINFO[0m 	STATUS_CODE: [32m201[0m
+	DATA:
+{
+    "id": 35480,
+    "name": "pAMMiBGXTy0RpVDsr7Fx",
+    "price": 4532,
+    "description": "09OH3m|4",
+    "imageUrl": "https://randomstring.url",
+    "location": "SPB",
+    "published": true,
+    "rating": 0,
+    "genreId": 1,
+    "createdAt": "2026-04-14T22:01:59.253Z",
+    "genre": {
+        "name": "Драма"
+    }
+}
+2026-04-15 01:01:59 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:59 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:59 [32mINFO[0m [32mpytest tests/api/test_movies.py::TestMovieAPI::test_delete_movie[admin_user_with_creds][0m
+curl -X DELETE 'https://api.dev-cinescope.coconutqa.ru/movies/35480' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU4ZGFiYWMwLTM5ZWYtNGQ1My05ZjdjLTQ0YTVmYjIxOTMwYiIsImVtYWlsIjoia2VreWJyM3N3NjdAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU4iXSwidmVyaWZpZWQiOnRydWUsImlhdCI6MTc3NjIwNDExOCwiZXhwIjoxNzc2MjA1OTE4fQ.fkpDOY6QDIRyHkLaoHco2ZcP-bsATizghQ-4970-EJw' \
+-H 'Content-Length: 0' \
+
+2026-04-15 01:01:59 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:59 [32mINFO[0m 	STATUS_CODE: [31m403[0m
+	DATA: [31m{
+    "message": "Forbidden resource",
+    "error": "Forbidden",
+    "statusCode": 403
+}[0m
+2026-04-15 01:01:59 [32mINFO[0m ================================================================================

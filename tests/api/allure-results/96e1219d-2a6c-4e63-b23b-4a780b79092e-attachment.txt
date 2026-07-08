@@ -1,0 +1,32 @@
+2026-04-15 01:01:55 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:55 [32mINFO[0m [32mpytest tests/api/test_db.py::TestDB::test_db_requests (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}' 
+
+2026-04-15 01:01:55 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:55 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "734964ec-4d6a-4789-839f-75797141e73e",
+        "email": "api1@gmail.com",
+        "fullName": "Жмышенко Валерий Альбертович",
+        "roles": [
+            "USER",
+            "ADMIN",
+            "SUPER_ADMIN"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTE1LCJleHAiOjE3NzYyMDU5MTV9.iaZS0Wex3XZKoaRzIKuxspw7-2SpL2aAYpPWEEEQPIo",
+    "refreshToken": "b4f4d597-7c6d-4c55-aef5-f45d8a231e5d",
+    "expiresIn": 1776205915110
+}
+2026-04-15 01:01:55 [32mINFO[0m ================================================================================

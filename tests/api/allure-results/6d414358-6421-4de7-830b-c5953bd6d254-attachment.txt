@@ -1,0 +1,91 @@
+2026-04-15 01:01:43 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:43 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_super_admin_get_user (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}' 
+
+2026-04-15 01:01:43 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:43 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "734964ec-4d6a-4789-839f-75797141e73e",
+        "email": "api1@gmail.com",
+        "fullName": "Жмышенко Валерий Альбертович",
+        "roles": [
+            "USER",
+            "ADMIN",
+            "SUPER_ADMIN"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTAzLCJleHAiOjE3NzYyMDU5MDN9.wdKD4yRKRdtL5UYqyHw_R-IL8lXwgzOkLX3J5p70mM8",
+    "refreshToken": "34e9c7c9-d920-4619-8fe0-3bec6c0a13e6",
+    "expiresIn": 1776205903625
+}
+2026-04-15 01:01:43 [32mINFO[0m ================================================================================
+2026-04-15 01:01:43 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:43 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_super_admin_get_user[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/user' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTAzLCJleHAiOjE3NzYyMDU5MDN9.wdKD4yRKRdtL5UYqyHw_R-IL8lXwgzOkLX3J5p70mM8' \
+-H 'Cookie: refresh_token=34e9c7c9-d920-4619-8fe0-3bec6c0a13e6' \
+-H 'Content-Length: 198' \
+-d '{"email": "kekj5074ts7@gmail.com", "fullName": "John Everett", "password": "@?VAXHUNd1I@&6gT", "passwordRepeat": "@?VAXHUNd1I@&6gT", "roles": ["USER"], "verified": true, "banned": false, "id": null}' 
+
+2026-04-15 01:01:43 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:43 [32mINFO[0m 	STATUS_CODE: [32m201[0m
+	DATA:
+{
+    "id": "a253c70b-5d15-4558-8cff-4baafd56b4f2",
+    "email": "kekj5074ts7@gmail.com",
+    "fullName": "John Everett",
+    "verified": true,
+    "banned": false,
+    "roles": [
+        "USER"
+    ],
+    "createdAt": "2026-04-14T22:01:43.921Z"
+}
+2026-04-15 01:01:43 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:43 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:43 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_super_admin_get_user[0m
+curl -X GET 'https://auth.dev-cinescope.coconutqa.ru/user/a253c70b-5d15-4558-8cff-4baafd56b4f2' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTAzLCJleHAiOjE3NzYyMDU5MDN9.wdKD4yRKRdtL5UYqyHw_R-IL8lXwgzOkLX3J5p70mM8' \
+-H 'Cookie: refresh_token=34e9c7c9-d920-4619-8fe0-3bec6c0a13e6' \
+
+2026-04-15 01:01:43 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:43 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "id": "a253c70b-5d15-4558-8cff-4baafd56b4f2",
+    "email": "kekj5074ts7@gmail.com",
+    "fullName": "John Everett",
+    "createdAt": "2026-04-14T22:01:43.921Z",
+    "verified": true,
+    "banned": false,
+    "roles": [
+        "USER"
+    ]
+}
+2026-04-15 01:01:43 [32mINFO[0m ================================================================================

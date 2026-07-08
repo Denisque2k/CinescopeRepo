@@ -1,0 +1,104 @@
+2026-04-15 01:01:45 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:45 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_super_admin_delete_user (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}' 
+
+2026-04-15 01:01:45 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:45 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "734964ec-4d6a-4789-839f-75797141e73e",
+        "email": "api1@gmail.com",
+        "fullName": "Жмышенко Валерий Альбертович",
+        "roles": [
+            "USER",
+            "ADMIN",
+            "SUPER_ADMIN"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTA2LCJleHAiOjE3NzYyMDU5MDZ9.EzECmnz6hBr-mw1p5gSL654X5chT2lkmY7zoYQnGUnQ",
+    "refreshToken": "b29496d5-9e9f-4d2b-99e9-7198149ec655",
+    "expiresIn": 1776205906050
+}
+2026-04-15 01:01:45 [32mINFO[0m ================================================================================
+2026-04-15 01:01:46 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:46 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_super_admin_delete_user[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/user' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTA2LCJleHAiOjE3NzYyMDU5MDZ9.EzECmnz6hBr-mw1p5gSL654X5chT2lkmY7zoYQnGUnQ' \
+-H 'Cookie: refresh_token=b29496d5-9e9f-4d2b-99e9-7198149ec655' \
+-H 'Content-Length: 196' \
+-d '{"email": "kek7wjwo6zg@gmail.com", "fullName": "Lawrence Jones", "password": "3P2%ry41QkR1T*", "passwordRepeat": "3P2%ry41QkR1T*", "roles": ["USER"], "verified": true, "banned": false, "id": null}' 
+
+2026-04-15 01:01:46 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:46 [32mINFO[0m 	STATUS_CODE: [32m201[0m
+	DATA:
+{
+    "id": "85ce5014-8ae7-42b5-855f-c6dba955934f",
+    "email": "kek7wjwo6zg@gmail.com",
+    "fullName": "Lawrence Jones",
+    "verified": true,
+    "banned": false,
+    "roles": [
+        "USER"
+    ],
+    "createdAt": "2026-04-14T22:01:46.231Z"
+}
+2026-04-15 01:01:46 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:46 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:46 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_super_admin_delete_user[0m
+curl -X DELETE 'https://auth.dev-cinescope.coconutqa.ru/user/85ce5014-8ae7-42b5-855f-c6dba955934f' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTA2LCJleHAiOjE3NzYyMDU5MDZ9.EzECmnz6hBr-mw1p5gSL654X5chT2lkmY7zoYQnGUnQ' \
+-H 'Cookie: refresh_token=b29496d5-9e9f-4d2b-99e9-7198149ec655' \
+-H 'Content-Length: 0' \
+
+2026-04-15 01:01:46 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:46 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+
+2026-04-15 01:01:46 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:46 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:46 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_super_admin_delete_user[0m
+curl -X DELETE 'https://auth.dev-cinescope.coconutqa.ru/user/85ce5014-8ae7-42b5-855f-c6dba955934f' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTA2LCJleHAiOjE3NzYyMDU5MDZ9.EzECmnz6hBr-mw1p5gSL654X5chT2lkmY7zoYQnGUnQ' \
+-H 'Cookie: refresh_token=b29496d5-9e9f-4d2b-99e9-7198149ec655' \
+-H 'Content-Length: 0' \
+
+2026-04-15 01:01:46 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:46 [32mINFO[0m 	STATUS_CODE: [31m404[0m
+	DATA: [31m{
+    "message": "Not Found",
+    "statusCode": 404
+}[0m
+2026-04-15 01:01:46 [32mINFO[0m ================================================================================

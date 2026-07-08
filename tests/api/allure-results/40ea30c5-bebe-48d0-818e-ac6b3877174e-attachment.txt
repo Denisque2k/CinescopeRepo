@@ -1,0 +1,112 @@
+2026-04-15 01:01:41 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:41 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_get_logout_user (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}' 
+
+2026-04-15 01:01:41 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:41 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "734964ec-4d6a-4789-839f-75797141e73e",
+        "email": "api1@gmail.com",
+        "fullName": "Жмышенко Валерий Альбертович",
+        "roles": [
+            "USER",
+            "ADMIN",
+            "SUPER_ADMIN"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTAxLCJleHAiOjE3NzYyMDU5MDF9._EhDkFpnBLFTYXBx_CMKG8w9PwkZS3o2LH8UU2aS_SA",
+    "refreshToken": "4b960945-a18e-47d5-bd77-676522a17f0d",
+    "expiresIn": 1776205901754
+}
+2026-04-15 01:01:41 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:41 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:41 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_get_logout_user (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/user' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTAxLCJleHAiOjE3NzYyMDU5MDF9._EhDkFpnBLFTYXBx_CMKG8w9PwkZS3o2LH8UU2aS_SA' \
+-H 'Cookie: refresh_token=4b960945-a18e-47d5-bd77-676522a17f0d' \
+-H 'Content-Length: 191' \
+-d '{"email": "kek7l81mvef@gmail.com", "fullName": "Mariah Kirk", "password": "cX8qLV8271sVH", "passwordRepeat": "cX8qLV8271sVH", "roles": ["USER"], "verified": true, "banned": false, "id": null}' 
+
+2026-04-15 01:01:41 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:41 [32mINFO[0m 	STATUS_CODE: [32m201[0m
+	DATA:
+{
+    "id": "1c6221a7-9d62-4621-98c9-4cc9a3a68679",
+    "email": "kek7l81mvef@gmail.com",
+    "fullName": "Mariah Kirk",
+    "verified": true,
+    "banned": false,
+    "roles": [
+        "USER"
+    ],
+    "createdAt": "2026-04-14T22:01:42.029Z"
+}
+2026-04-15 01:01:41 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:42 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:42 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_get_logout_user (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 63' \
+-d '{"email": "kek7l81mvef@gmail.com", "password": "cX8qLV8271sVH"}' 
+
+2026-04-15 01:01:42 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:42 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "1c6221a7-9d62-4621-98c9-4cc9a3a68679",
+        "email": "kek7l81mvef@gmail.com",
+        "fullName": "Mariah Kirk",
+        "roles": [
+            "USER"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFjNjIyMWE3LTlkNjItNDYyMS05OGM5LTRjYzlhM2E2ODY3OSIsImVtYWlsIjoia2VrN2w4MW12ZWZAZ21haWwuY29tIiwicm9sZXMiOlsiVVNFUiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTAyLCJleHAiOjE3NzYyMDU5MDJ9.49md30VuTHTnDmL4TrnOnLCN7zdaOn1qI9ZlD8eN7GU",
+    "refreshToken": "005e9714-f7b3-4a97-be1f-5c481927f773",
+    "expiresIn": 1776205902423
+}
+2026-04-15 01:01:42 [32mINFO[0m ================================================================================
+2026-04-15 01:01:42 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:42 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_get_logout_user[0m
+curl -X GET 'https://auth.dev-cinescope.coconutqa.ru/logout' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFjNjIyMWE3LTlkNjItNDYyMS05OGM5LTRjYzlhM2E2ODY3OSIsImVtYWlsIjoia2VrN2w4MW12ZWZAZ21haWwuY29tIiwicm9sZXMiOlsiVVNFUiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTAyLCJleHAiOjE3NzYyMDU5MDJ9.49md30VuTHTnDmL4TrnOnLCN7zdaOn1qI9ZlD8eN7GU' \
+-H 'Cookie: refresh_token=005e9714-f7b3-4a97-be1f-5c481927f773' \
+
+2026-04-15 01:01:42 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:42 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+OK
+2026-04-15 01:01:42 [32mINFO[0m ================================================================================

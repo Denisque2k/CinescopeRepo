@@ -1,0 +1,58 @@
+2026-04-15 01:01:41 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:41 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_register_and_login_user (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/register' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 192' \
+-d '{"email": "kektjovr4jw@gmail.com", "fullName": "Sarah Bennett", "password": "gzOAD?0Oui9mD", "passwordRepeat": "gzOAD?0Oui9mD", "roles": ["USER"], "verified": null, "banned": null, "id": null}' 
+
+2026-04-15 01:01:41 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:41 [32mINFO[0m 	STATUS_CODE: [32m201[0m
+	DATA:
+{
+    "id": "31aa2eb6-75f4-43ab-a988-02004e63ae98",
+    "email": "kektjovr4jw@gmail.com",
+    "fullName": "Sarah Bennett",
+    "verified": true,
+    "banned": false,
+    "roles": [
+        "USER"
+    ],
+    "createdAt": "2026-04-14T22:01:41.025Z"
+}
+2026-04-15 01:01:41 [32mINFO[0m ================================================================================
+2026-04-15 01:01:41 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:41 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_register_and_login_user[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 63' \
+-d '{"email": "kektjovr4jw@gmail.com", "password": "gzOAD?0Oui9mD"}' 
+
+2026-04-15 01:01:41 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:41 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "31aa2eb6-75f4-43ab-a988-02004e63ae98",
+        "email": "kektjovr4jw@gmail.com",
+        "fullName": "Sarah Bennett",
+        "roles": [
+            "USER"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMxYWEyZWI2LTc1ZjQtNDNhYi1hOTg4LTAyMDA0ZTYzYWU5OCIsImVtYWlsIjoia2VrdGpvdnI0andAZ21haWwuY29tIiwicm9sZXMiOlsiVVNFUiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTAxLCJleHAiOjE3NzYyMDU5MDF9.gRW_36HJ2eFTKBsOMHh7LlUjeLJ_gplRI3k34B3CUeg",
+    "refreshToken": "cecfb053-b66f-482e-ae7a-457045cc93c9",
+    "expiresIn": 1776205901348
+}
+2026-04-15 01:01:41 [32mINFO[0m ================================================================================

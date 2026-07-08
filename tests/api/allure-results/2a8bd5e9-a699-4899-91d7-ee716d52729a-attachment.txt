@@ -1,0 +1,89 @@
+2026-04-15 01:01:44 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:44 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_admin_get_user (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 66' \
+-d '{"email": "kekybr3sw67@gmail.com", "password": "Oj8HjnHF#we7xS|F"}' 
+
+2026-04-15 01:01:44 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:44 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "e8dabac0-39ef-4d53-9f7c-44a5fb21930b",
+        "email": "kekybr3sw67@gmail.com",
+        "fullName": "Ryan Larson",
+        "roles": [
+            "ADMIN"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU4ZGFiYWMwLTM5ZWYtNGQ1My05ZjdjLTQ0YTVmYjIxOTMwYiIsImVtYWlsIjoia2VreWJyM3N3NjdAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU4iXSwidmVyaWZpZWQiOnRydWUsImlhdCI6MTc3NjIwNDEwNCwiZXhwIjoxNzc2MjA1OTA0fQ.v5-YCjriiTfMV13Bq4lxEhlzRcdMZaaNg5x30rg6c2I",
+    "refreshToken": "85968632-c6a2-4f33-9a0a-d33b0e560183",
+    "expiresIn": 1776205904234
+}
+2026-04-15 01:01:44 [32mINFO[0m ================================================================================
+2026-04-15 01:01:44 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:44 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_admin_get_user[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/user' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU4ZGFiYWMwLTM5ZWYtNGQ1My05ZjdjLTQ0YTVmYjIxOTMwYiIsImVtYWlsIjoia2VreWJyM3N3NjdAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU4iXSwidmVyaWZpZWQiOnRydWUsImlhdCI6MTc3NjIwNDEwNCwiZXhwIjoxNzc2MjA1OTA0fQ.v5-YCjriiTfMV13Bq4lxEhlzRcdMZaaNg5x30rg6c2I' \
+-H 'Cookie: refresh_token=85968632-c6a2-4f33-9a0a-d33b0e560183' \
+-H 'Content-Length: 192' \
+-d '{"email": "kek93ypzr2v@gmail.com", "fullName": "Ashley Sweeney", "password": "@f^n6Ceh1tM8", "passwordRepeat": "@f^n6Ceh1tM8", "roles": ["USER"], "verified": true, "banned": false, "id": null}' 
+
+2026-04-15 01:01:44 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:44 [32mINFO[0m 	STATUS_CODE: [32m201[0m
+	DATA:
+{
+    "id": "8ad7d550-59eb-4cef-9f6a-5c26f128e06d",
+    "email": "kek93ypzr2v@gmail.com",
+    "fullName": "Ashley Sweeney",
+    "verified": true,
+    "banned": false,
+    "roles": [
+        "USER"
+    ],
+    "createdAt": "2026-04-14T22:01:44.436Z"
+}
+2026-04-15 01:01:44 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:44 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:44 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_admin_get_user[0m
+curl -X GET 'https://auth.dev-cinescope.coconutqa.ru/user/8ad7d550-59eb-4cef-9f6a-5c26f128e06d' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU4ZGFiYWMwLTM5ZWYtNGQ1My05ZjdjLTQ0YTVmYjIxOTMwYiIsImVtYWlsIjoia2VreWJyM3N3NjdAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU4iXSwidmVyaWZpZWQiOnRydWUsImlhdCI6MTc3NjIwNDEwNCwiZXhwIjoxNzc2MjA1OTA0fQ.v5-YCjriiTfMV13Bq4lxEhlzRcdMZaaNg5x30rg6c2I' \
+-H 'Cookie: refresh_token=85968632-c6a2-4f33-9a0a-d33b0e560183' \
+
+2026-04-15 01:01:44 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:44 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "id": "8ad7d550-59eb-4cef-9f6a-5c26f128e06d",
+    "email": "kek93ypzr2v@gmail.com",
+    "fullName": "Ashley Sweeney",
+    "createdAt": "2026-04-14T22:01:44.436Z",
+    "verified": true,
+    "banned": false,
+    "roles": [
+        "USER"
+    ]
+}
+2026-04-15 01:01:44 [32mINFO[0m ================================================================================

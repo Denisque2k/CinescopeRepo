@@ -1,0 +1,38 @@
+2026-04-15 01:01:56 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:56 [32mINFO[0m [32mpytest tests/api/test_movies.py::TestMovieAPI::test_get_movies[500-2000-locations1-1-200][0m
+curl -X GET 'https://api.dev-cinescope.coconutqa.ru/movies?pageSize=1&page=1&minPrice=500&maxPrice=2000&locations=SPB&published=True&genreId=1&createdAt=asc' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+
+2026-04-15 01:01:56 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:56 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "movies": [
+        {
+            "id": 31,
+            "name": "Chad Bryant",
+            "description": "Вы узнаете историю подростка Иккинга, которому не слишком близки традиции его героического племени, много лет ведущего войну с драконами. Мир Иккинга переворачивается с ног на голову, когда он неожиданно встречает дракона Беззубика, который поможет ему и другим викингам увидеть привычный мир с совершенно другой стороны…",
+            "genreId": 1,
+            "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-image/4774061/1a920451-e765-41e9-81aa-78438e82abbc/300x450",
+            "price": 1488,
+            "rating": 4,
+            "location": "SPB",
+            "published": true,
+            "createdAt": "2024-08-27T07:52:54.860Z",
+            "genre": {
+                "name": "Драма"
+            }
+        }
+    ],
+    "count": 749,
+    "page": 1,
+    "pageSize": 1,
+    "pageCount": 749
+}
+2026-04-15 01:01:56 [32mINFO[0m ================================================================================

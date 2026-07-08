@@ -1,0 +1,84 @@
+2026-04-15 01:01:49 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:49 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_admin_patch_method (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 66' \
+-d '{"email": "kekybr3sw67@gmail.com", "password": "Oj8HjnHF#we7xS|F"}' 
+
+2026-04-15 01:01:49 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:49 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "e8dabac0-39ef-4d53-9f7c-44a5fb21930b",
+        "email": "kekybr3sw67@gmail.com",
+        "fullName": "Ryan Larson",
+        "roles": [
+            "ADMIN"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU4ZGFiYWMwLTM5ZWYtNGQ1My05ZjdjLTQ0YTVmYjIxOTMwYiIsImVtYWlsIjoia2VreWJyM3N3NjdAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU4iXSwidmVyaWZpZWQiOnRydWUsImlhdCI6MTc3NjIwNDEwOSwiZXhwIjoxNzc2MjA1OTA5fQ.Ra6iQOOfScxfMvaaEGh3IpR2UqwW1E9sk1pBjegF4MY",
+    "refreshToken": "426ad707-41f4-47b0-9601-6ffffdeeb238",
+    "expiresIn": 1776205909244
+}
+2026-04-15 01:01:49 [32mINFO[0m ================================================================================
+2026-04-15 01:01:49 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:49 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_admin_patch_method[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/user' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU4ZGFiYWMwLTM5ZWYtNGQ1My05ZjdjLTQ0YTVmYjIxOTMwYiIsImVtYWlsIjoia2VreWJyM3N3NjdAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU4iXSwidmVyaWZpZWQiOnRydWUsImlhdCI6MTc3NjIwNDEwOSwiZXhwIjoxNzc2MjA1OTA5fQ.Ra6iQOOfScxfMvaaEGh3IpR2UqwW1E9sk1pBjegF4MY' \
+-H 'Cookie: refresh_token=426ad707-41f4-47b0-9601-6ffffdeeb238' \
+-H 'Content-Length: 199' \
+-d '{"email": "kek7hwjurya@gmail.com", "fullName": "Jennifer Davila", "password": "@m795Jum%myPYMb", "passwordRepeat": "@m795Jum%myPYMb", "roles": ["USER"], "verified": true, "banned": false, "id": null}' 
+
+2026-04-15 01:01:49 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:49 [32mINFO[0m 	STATUS_CODE: [32m201[0m
+	DATA:
+{
+    "id": "dbf1d10b-f721-4e0f-b19d-6adfa337822e",
+    "email": "kek7hwjurya@gmail.com",
+    "fullName": "Jennifer Davila",
+    "verified": true,
+    "banned": false,
+    "roles": [
+        "USER"
+    ],
+    "createdAt": "2026-04-14T22:01:49.511Z"
+}
+2026-04-15 01:01:49 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:49 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:49 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_admin_patch_method[0m
+curl -X PATCH 'https://auth.dev-cinescope.coconutqa.ru/user/dbf1d10b-f721-4e0f-b19d-6adfa337822e' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU4ZGFiYWMwLTM5ZWYtNGQ1My05ZjdjLTQ0YTVmYjIxOTMwYiIsImVtYWlsIjoia2VreWJyM3N3NjdAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU4iXSwidmVyaWZpZWQiOnRydWUsImlhdCI6MTc3NjIwNDEwOSwiZXhwIjoxNzc2MjA1OTA5fQ.Ra6iQOOfScxfMvaaEGh3IpR2UqwW1E9sk1pBjegF4MY' \
+-H 'Cookie: refresh_token=426ad707-41f4-47b0-9601-6ffffdeeb238' \
+-H 'Content-Length: 55' \
+-d '{"roles": ["ADMIN"], "verified": true, "banned": false}' 
+
+2026-04-15 01:01:49 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:49 [32mINFO[0m 	STATUS_CODE: [31m403[0m
+	DATA: [31m{
+    "message": "Forbidden resource",
+    "error": "Forbidden",
+    "statusCode": 403
+}[0m
+2026-04-15 01:01:49 [32mINFO[0m ================================================================================

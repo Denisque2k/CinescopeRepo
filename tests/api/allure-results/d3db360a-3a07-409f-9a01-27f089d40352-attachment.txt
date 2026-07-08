@@ -1,0 +1,150 @@
+2026-04-15 01:02:03 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:02:03 [32mINFO[0m [32mpytest tests/api/test_movies.py::TestMovieAPI::test_patch_movie (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}' 
+
+2026-04-15 01:02:03 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:02:03 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "734964ec-4d6a-4789-839f-75797141e73e",
+        "email": "api1@gmail.com",
+        "fullName": "Жмышенко Валерий Альбертович",
+        "roles": [
+            "USER",
+            "ADMIN",
+            "SUPER_ADMIN"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTIzLCJleHAiOjE3NzYyMDU5MjN9.ktZ1m53HHVwBmyASU6s-wQqMpDNdpqPApuG8Riv507U",
+    "refreshToken": "e0226eed-64dd-4041-a29d-1a2215b06a7c",
+    "expiresIn": 1776205923129
+}
+2026-04-15 01:02:03 [32mINFO[0m ================================================================================
+
+2026-04-15 01:02:03 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:02:03 [32mINFO[0m [32mpytest tests/api/test_movies.py::TestMovieAPI::test_patch_movie (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/user' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTIzLCJleHAiOjE3NzYyMDU5MjN9.ktZ1m53HHVwBmyASU6s-wQqMpDNdpqPApuG8Riv507U' \
+-H 'Cookie: refresh_token=e0226eed-64dd-4041-a29d-1a2215b06a7c' \
+-H 'Content-Length: 199' \
+-d '{"email": "keki1svvlv7@gmail.com", "fullName": "James Andrews", "password": "WlC6#Dc1yLJ5gH4m", "passwordRepeat": "WlC6#Dc1yLJ5gH4m", "roles": ["USER"], "verified": true, "banned": false, "id": null}' 
+
+2026-04-15 01:02:03 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:02:03 [32mINFO[0m 	STATUS_CODE: [32m201[0m
+	DATA:
+{
+    "id": "0cde0aea-8b76-43c4-a99b-d57a8dd2f8dd",
+    "email": "keki1svvlv7@gmail.com",
+    "fullName": "James Andrews",
+    "verified": true,
+    "banned": false,
+    "roles": [
+        "USER"
+    ],
+    "createdAt": "2026-04-14T22:02:03.427Z"
+}
+2026-04-15 01:02:03 [32mINFO[0m ================================================================================
+
+2026-04-15 01:02:03 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:02:03 [32mINFO[0m [32mpytest tests/api/test_movies.py::TestMovieAPI::test_patch_movie (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 66' \
+-d '{"email": "keki1svvlv7@gmail.com", "password": "WlC6#Dc1yLJ5gH4m"}' 
+
+2026-04-15 01:02:03 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:02:03 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "0cde0aea-8b76-43c4-a99b-d57a8dd2f8dd",
+        "email": "keki1svvlv7@gmail.com",
+        "fullName": "James Andrews",
+        "roles": [
+            "USER"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBjZGUwYWVhLThiNzYtNDNjNC1hOTliLWQ1N2E4ZGQyZjhkZCIsImVtYWlsIjoia2VraTFzdnZsdjdAZ21haWwuY29tIiwicm9sZXMiOlsiVVNFUiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTIzLCJleHAiOjE3NzYyMDU5MjN9.ygcrFA2wRzCDuygbQbNK80d18f5_d3ZYInpyPkrkNUw",
+    "refreshToken": "c210c74b-44c9-4fb0-9478-076d54e37c3b",
+    "expiresIn": 1776205923920
+}
+2026-04-15 01:02:03 [32mINFO[0m ================================================================================
+2026-04-15 01:02:03 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:02:03 [32mINFO[0m [32mpytest tests/api/test_movies.py::TestMovieAPI::test_patch_movie[0m
+curl -X POST 'https://api.dev-cinescope.coconutqa.ru/movies' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTIzLCJleHAiOjE3NzYyMDU5MjN9.ktZ1m53HHVwBmyASU6s-wQqMpDNdpqPApuG8Riv507U' \
+-H 'Content-Length: 167' \
+-d '{"name": "K?s6amsk3m?zK5BtY|%", "imageUrl": "https://randomstring.url", "price": 6828.0, "description": "xf6jLMkR", "location": "MSK", "published": true, "genreId": 1}' 
+
+2026-04-15 01:02:03 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:02:03 [32mINFO[0m 	STATUS_CODE: [32m201[0m
+	DATA:
+{
+    "id": 35484,
+    "name": "K?s6amsk3m?zK5BtY|%",
+    "price": 6828,
+    "description": "xf6jLMkR",
+    "imageUrl": "https://randomstring.url",
+    "location": "MSK",
+    "published": true,
+    "rating": 0,
+    "genreId": 1,
+    "createdAt": "2026-04-14T22:02:04.015Z",
+    "genre": {
+        "name": "Драма"
+    }
+}
+2026-04-15 01:02:03 [32mINFO[0m ================================================================================
+
+2026-04-15 01:02:04 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:02:04 [32mINFO[0m [32mpytest tests/api/test_movies.py::TestMovieAPI::test_patch_movie[0m
+curl -X PATCH 'https://api.dev-cinescope.coconutqa.ru/movies/35484' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBjZGUwYWVhLThiNzYtNDNjNC1hOTliLWQ1N2E4ZGQyZjhkZCIsImVtYWlsIjoia2VraTFzdnZsdjdAZ21haWwuY29tIiwicm9sZXMiOlsiVVNFUiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTIzLCJleHAiOjE3NzYyMDU5MjN9.ygcrFA2wRzCDuygbQbNK80d18f5_d3ZYInpyPkrkNUw' \
+-H 'Content-Length: 167' \
+-d '{"name": "K?s6amsk3m?zK5BtY|%", "imageUrl": "https://randomstring.url", "price": 6828.0, "description": "xf6jLMkR", "location": "MSK", "published": true, "genreId": 1}' 
+
+2026-04-15 01:02:04 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:02:04 [32mINFO[0m 	STATUS_CODE: [31m403[0m
+	DATA: [31m{
+    "message": "Forbidden resource",
+    "error": "Forbidden",
+    "statusCode": 403
+}[0m
+2026-04-15 01:02:04 [32mINFO[0m ================================================================================

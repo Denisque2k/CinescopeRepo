@@ -1,0 +1,117 @@
+2026-04-15 01:01:52 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:52 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_user_create_user (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}' 
+
+2026-04-15 01:01:52 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:52 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "734964ec-4d6a-4789-839f-75797141e73e",
+        "email": "api1@gmail.com",
+        "fullName": "Жмышенко Валерий Альбертович",
+        "roles": [
+            "USER",
+            "ADMIN",
+            "SUPER_ADMIN"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTEyLCJleHAiOjE3NzYyMDU5MTJ9.ymJefdO-RNOrxTLZBx1SHIIn-so4A48z-1T5CjEmlS4",
+    "refreshToken": "48bed1e3-d1e3-4ffe-8c4d-7b301d197dec",
+    "expiresIn": 1776205912150
+}
+2026-04-15 01:01:52 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:52 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:52 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_user_create_user (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/user' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTEyLCJleHAiOjE3NzYyMDU5MTJ9.ymJefdO-RNOrxTLZBx1SHIIn-so4A48z-1T5CjEmlS4' \
+-H 'Cookie: refresh_token=48bed1e3-d1e3-4ffe-8c4d-7b301d197dec' \
+-H 'Content-Length: 203' \
+-d '{"email": "kekp0g6cit4@gmail.com", "fullName": "Julia Hayes", "password": ":ytR?Mdd0yVlOh#0vAc", "passwordRepeat": ":ytR?Mdd0yVlOh#0vAc", "roles": ["USER"], "verified": true, "banned": false, "id": null}' 
+
+2026-04-15 01:01:52 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:52 [32mINFO[0m 	STATUS_CODE: [32m201[0m
+	DATA:
+{
+    "id": "5f7efec7-aeaa-4e6d-b349-7088a6cb6408",
+    "email": "kekp0g6cit4@gmail.com",
+    "fullName": "Julia Hayes",
+    "verified": true,
+    "banned": false,
+    "roles": [
+        "USER"
+    ],
+    "createdAt": "2026-04-14T22:01:52.448Z"
+}
+2026-04-15 01:01:52 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:52 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:52 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_user_create_user (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 69' \
+-d '{"email": "kekp0g6cit4@gmail.com", "password": ":ytR?Mdd0yVlOh#0vAc"}' 
+
+2026-04-15 01:01:52 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:52 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "5f7efec7-aeaa-4e6d-b349-7088a6cb6408",
+        "email": "kekp0g6cit4@gmail.com",
+        "fullName": "Julia Hayes",
+        "roles": [
+            "USER"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmN2VmZWM3LWFlYWEtNGU2ZC1iMzQ5LTcwODhhNmNiNjQwOCIsImVtYWlsIjoia2VrcDBnNmNpdDRAZ21haWwuY29tIiwicm9sZXMiOlsiVVNFUiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTEyLCJleHAiOjE3NzYyMDU5MTJ9.uQK_kQ8tooh0FQzhLDCO7viT8Ozc05HAt9TDTo8_6Q0",
+    "refreshToken": "a8164b56-0659-4574-aa4b-13b0c97a8453",
+    "expiresIn": 1776205912843
+}
+2026-04-15 01:01:52 [32mINFO[0m ================================================================================
+2026-04-15 01:01:53 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:53 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_user_create_user[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/user' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmN2VmZWM3LWFlYWEtNGU2ZC1iMzQ5LTcwODhhNmNiNjQwOCIsImVtYWlsIjoia2VrcDBnNmNpdDRAZ21haWwuY29tIiwicm9sZXMiOlsiVVNFUiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTEyLCJleHAiOjE3NzYyMDU5MTJ9.uQK_kQ8tooh0FQzhLDCO7viT8Ozc05HAt9TDTo8_6Q0' \
+-H 'Cookie: refresh_token=a8164b56-0659-4574-aa4b-13b0c97a8453' \
+-H 'Content-Length: 203' \
+-d '{"email": "kekp0g6cit4@gmail.com", "fullName": "Julia Hayes", "password": ":ytR?Mdd0yVlOh#0vAc", "passwordRepeat": ":ytR?Mdd0yVlOh#0vAc", "roles": ["USER"], "verified": true, "banned": false, "id": null}' 
+
+2026-04-15 01:01:53 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:53 [32mINFO[0m 	STATUS_CODE: [31m403[0m
+	DATA: [31m{
+    "message": "Forbidden resource",
+    "error": "Forbidden",
+    "statusCode": 403
+}[0m
+2026-04-15 01:01:53 [32mINFO[0m ================================================================================

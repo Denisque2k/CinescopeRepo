@@ -1,0 +1,37 @@
+2026-04-15 01:01:43 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:43 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_unauthorized_refresh_tokens[0m
+curl -X GET 'https://auth.dev-cinescope.coconutqa.ru/logout' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Cookie: refresh_token=0dc79aca-578d-4688-a607-0e1368732d7c' \
+
+2026-04-15 01:01:43 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:43 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+OK
+2026-04-15 01:01:43 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:43 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:43 [32mINFO[0m [32mpytest tests/api/test_auth.py::TestAuthAPI::test_unauthorized_refresh_tokens[0m
+curl -X GET 'https://auth.dev-cinescope.coconutqa.ru/refresh-tokens' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+
+2026-04-15 01:01:43 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:43 [32mINFO[0m 	STATUS_CODE: [31m401[0m
+	DATA: [31m{
+    "message": "Пользователь не авторизован",
+    "error": "Unauthorized",
+    "statusCode": 401
+}[0m
+2026-04-15 01:01:43 [32mINFO[0m ================================================================================

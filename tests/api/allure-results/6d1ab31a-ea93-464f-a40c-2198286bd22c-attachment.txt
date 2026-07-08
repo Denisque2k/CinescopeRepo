@@ -1,0 +1,97 @@
+2026-04-15 01:01:57 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:57 [32mINFO[0m [32mpytest tests/api/test_movies.py::TestMovieAPI::test_create_movie (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.coconutqa.ru/login' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}' 
+
+2026-04-15 01:01:57 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:57 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "user": {
+        "id": "734964ec-4d6a-4789-839f-75797141e73e",
+        "email": "api1@gmail.com",
+        "fullName": "Жмышенко Валерий Альбертович",
+        "roles": [
+            "USER",
+            "ADMIN",
+            "SUPER_ADMIN"
+        ]
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTE3LCJleHAiOjE3NzYyMDU5MTd9.uQmjjgS2UP7QNMQJECXlkNRjj0QmvD4i25i3Sc4yxBQ",
+    "refreshToken": "babf9bfb-4044-4650-a2e6-abb06fed292d",
+    "expiresIn": 1776205917050
+}
+2026-04-15 01:01:57 [32mINFO[0m ================================================================================
+2026-04-15 01:01:57 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:57 [32mINFO[0m [32mpytest tests/api/test_movies.py::TestMovieAPI::test_create_movie[0m
+curl -X POST 'https://api.dev-cinescope.coconutqa.ru/movies' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDk2NGVjLTRkNmEtNDc4OS04MzlmLTc1Nzk3MTQxZTczZSIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzc2MjA0MTE3LCJleHAiOjE3NzYyMDU5MTd9.uQmjjgS2UP7QNMQJECXlkNRjj0QmvD4i25i3Sc4yxBQ' \
+-H 'Content-Length: 174' \
+-d '{"name": "suFX@@%Xd76xsp0Tzb", "imageUrl": "https://randomstring.url", "price": 4185.0, "description": "a%f2fsd$1$iQJZdO", "location": "MSK", "published": true, "genreId": 1}' 
+
+2026-04-15 01:01:57 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:57 [32mINFO[0m 	STATUS_CODE: [32m201[0m
+	DATA:
+{
+    "id": 35478,
+    "name": "suFX@@%Xd76xsp0Tzb",
+    "price": 4185,
+    "description": "a%f2fsd$1$iQJZdO",
+    "imageUrl": "https://randomstring.url",
+    "location": "MSK",
+    "published": true,
+    "rating": 0,
+    "genreId": 1,
+    "createdAt": "2026-04-14T22:01:57.225Z",
+    "genre": {
+        "name": "Драма"
+    }
+}
+2026-04-15 01:01:57 [32mINFO[0m ================================================================================
+
+2026-04-15 01:01:57 [32mINFO[0m 
+======================================== REQUEST ========================================
+2026-04-15 01:01:57 [32mINFO[0m [32mpytest tests/api/test_movies.py::TestMovieAPI::test_create_movie[0m
+curl -X GET 'https://api.dev-cinescope.coconutqa.ru/movies/35478' \
+-H 'User-Agent: python-requests/2.32.5' \
+-H 'Accept-Encoding: gzip, deflate' \
+-H 'Accept: application/json' \
+-H 'Connection: keep-alive' \
+-H 'Content-Type: application/json' \
+
+2026-04-15 01:01:57 [32mINFO[0m 
+======================================== RESPONSE ========================================
+2026-04-15 01:01:57 [32mINFO[0m 	STATUS_CODE: [32m200[0m
+	DATA:
+{
+    "id": 35478,
+    "name": "suFX@@%Xd76xsp0Tzb",
+    "price": 4185,
+    "description": "a%f2fsd$1$iQJZdO",
+    "imageUrl": "https://randomstring.url",
+    "location": "MSK",
+    "published": true,
+    "rating": 0,
+    "genreId": 1,
+    "createdAt": "2026-04-14T22:01:57.225Z",
+    "reviews": [],
+    "genre": {
+        "name": "Драма"
+    }
+}
+2026-04-15 01:01:57 [32mINFO[0m ================================================================================
