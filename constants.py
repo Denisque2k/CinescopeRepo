@@ -25,7 +25,7 @@ POST_MOVIE = "movies"
 GET_MOVIE = "movies/"
 DELETE_MOVIE = "movies/"
 PATCH_MOVIE = "movies/"
-
+CONSTANT = "Это константа"
 GENRES_URL = "genres"
 
 """
